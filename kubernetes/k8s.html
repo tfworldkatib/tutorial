@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Hyperparameter Tuning - Hyperparameter tuning for TensorFlow using Katib and Kubeflow</title>
+        <title>Install Kubernetes - Hyperparameter tuning for TensorFlow using Katib and Kubeflow</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="../kubernetes/setup.html"><strong aria-hidden="true">1.</strong> Setup Kubernetes</a></li><li><ol class="section"><li><a href="../kubernetes/vb.html"><strong aria-hidden="true">1.1.</strong> Install Virtualbox</a></li><li><a href="../kubernetes/vagrant.html"><strong aria-hidden="true">1.2.</strong> Install Vagrant</a></li><li><a href="../kubernetes/k8s.html"><strong aria-hidden="true">1.3.</strong> Install Kubernetes</a></li></ol></li><li><a href="../kubeflow/install.html"><strong aria-hidden="true">2.</strong> Install Kubeflow/Katib</a></li><li><a href="../kubeflow/kubeflow.html"><strong aria-hidden="true">3.</strong> Kubeflow</a></li><li><ol class="section"><li><a href="../kubeflow/architecture.html"><strong aria-hidden="true">3.1.</strong> Architecture</a></li><li><a href="../kubeflow/jupyter.html"><strong aria-hidden="true">3.2.</strong> Jupyter Notebook</a></li></ol></li><li><a href="../katib/katib.html"><strong aria-hidden="true">4.</strong> Katib</a></li><li><ol class="section"><li><a href="../katib/hptuning.html" class="active"><strong aria-hidden="true">4.1.</strong> Hyperparameter Tuning</a></li><li><a href="../katib/nas.html"><strong aria-hidden="true">4.2.</strong> Neural Architecture Search</a></li></ol></li><li><a href="../references/index.html"><strong aria-hidden="true">5.</strong> References</a></li><li class="spacer"></li></ol>
+                <ol class="chapter"><li><a href="../kubernetes/setup.html"><strong aria-hidden="true">1.</strong> Setup Kubernetes</a></li><li><ol class="section"><li><a href="../kubernetes/vb.html"><strong aria-hidden="true">1.1.</strong> Install Virtualbox</a></li><li><a href="../kubernetes/vagrant.html"><strong aria-hidden="true">1.2.</strong> Install Vagrant</a></li><li><a href="../kubernetes/k8s.html" class="active"><strong aria-hidden="true">1.3.</strong> Install Kubernetes</a></li></ol></li><li><a href="../kubeflow/install.html"><strong aria-hidden="true">2.</strong> Install Kubeflow/Katib</a></li><li><a href="../kubeflow/kubeflow.html"><strong aria-hidden="true">3.</strong> Kubeflow</a></li><li><ol class="section"><li><a href="../kubeflow/architecture.html"><strong aria-hidden="true">3.1.</strong> Architecture</a></li><li><a href="../kubeflow/jupyter.html"><strong aria-hidden="true">3.2.</strong> Jupyter Notebook</a></li></ol></li><li><a href="../katib/katib.html"><strong aria-hidden="true">4.</strong> Katib</a></li><li><ol class="section"><li><a href="../katib/hptuning.html"><strong aria-hidden="true">4.1.</strong> Hyperparameter Tuning</a></li><li><a href="../katib/nas.html"><strong aria-hidden="true">4.2.</strong> Neural Architecture Search</a></li></ol></li><li><a href="../references/index.html"><strong aria-hidden="true">5.</strong> References</a></li><li class="spacer"></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -145,20 +145,24 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#hyperparameter-tuning" id="hyperparameter-tuning">Hyperparameter Tuning</a></h1>
+                        <h1><a class="header" href="#install-kubernetes" id="install-kubernetes">Install Kubernetes</a></h1>
+<pre><code>vagrant init minikatib/tfworld \
+  --box-version 0.1.0
+vagrant up
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../katib/katib.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../kubernetes/vagrant.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../katib/nas.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../kubeflow/install.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -170,13 +174,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="../katib/katib.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="../kubernetes/vagrant.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="../katib/nas.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="../kubeflow/install.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
