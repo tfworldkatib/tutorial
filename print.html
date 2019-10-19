@@ -160,11 +160,127 @@
 <h1><a class="header" href="#install-vagrant" id="install-vagrant">Install Vagrant</a></h1>
 <p>Follow the instructions <a href="https://www.vagrantup.com/downloads.html">here</a> to install Vagrant for your operating system.</p>
 <h1><a class="header" href="#install-kubernetes" id="install-kubernetes">Install Kubernetes</a></h1>
+<p>Create the Vagrant virtual machine that we will use </p>
 <pre><code>vagrant init minikatib/tfworld \
   --box-version 0.1.0
 vagrant up
 </code></pre>
-<h1><a class="header" href="#install-kubeflowkatib" id="install-kubeflowkatib">Install Kubeflow/Katib</a></h1>
+<p>Login to the VM</p>
+<pre><code>vagrant ssh
+</code></pre>
+<details>
+<summary>
+ Sample Output
+ </summary>
+Welcome to Ubuntu 18.04.2 LTS (GNU/Linux 4.15.0-51-generic x86_64)
+<ul>
+<li>Documentation:  https://help.ubuntu.com</li>
+<li>Management:     https://landscape.canonical.com</li>
+<li>Support:        https://ubuntu.com/advantage</li>
+</ul>
+<p>System information as of Fri Oct 18 03:10:36 UTC 2019</p>
+<p>System load:  0.0                Processes:           119
+Usage of /:   31.8% of 61.80GB   Users logged in:     0
+Memory usage: 4%                 IP address for eth0: 10.0.2.15
+Swap usage:   0%</p>
+<ul>
+<li>
+<p>Kata Containers are now fully integrated in Charmed Kubernetes 1.16!
+Yes, charms take the Krazy out of K8s Kata Kluster Konstruction.</p>
+<p>https://ubuntu.com/kubernetes/docs/release-notes</p>
+</li>
+</ul>
+<p>111 packages can be updated.
+60 updates are security updates.</p>
+<p>Last login: Fri Oct 18 01:43:06 2019 from 10.0.2.2</p>
+<font color="green">
+vagrant@katib:~$
+</font>
+</details>
+Intialize and configure kubernetes using the start-k8s.sh script.
+```console
+./k8s-config/start-k8s.sh
+```
+This may take around 5-10 minutes.
+<details>
+<summary>
+ Sample Output
+ </summary>
+ [init] Using Kubernetes version: v1.14.8
+[preflight] Running pre-flight checks
+	[WARNING Service-Docker]: docker service is not enabled, please run 'systemctl enable docker.service'
+	[WARNING IsDockerSystemdCheck]: detected "cgroupfs" as the Docker cgroup driver. The recommended driver is "systemd". Please follow the guide at https://kubernetes.io/docs/setup/cri/
+[preflight] Pulling images required for setting up a Kubernetes cluster
+[preflight] This might take a minute or two, depending on the speed of your internet connection
+[preflight] You can also perform this action in beforehand using 'kubeadm config images pull'
+[kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
+[kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
+[kubelet-start] Activating the kubelet service
+[certs] Using certificateDir folder "/etc/kubernetes/pki"
+[certs] Generating "etcd/ca" certificate and key
+[certs] Generating "apiserver-etcd-client" certificate and key
+[certs] Generating "etcd/healthcheck-client" certificate and key
+[certs] Generating "etcd/server" certificate and key
+[certs] etcd/server serving cert is signed for DNS names [katib localhost] and IPs [10.0.2.15 127.0.0.1 ::1]
+[certs] Generating "etcd/peer" certificate and key
+[certs] etcd/peer serving cert is signed for DNS names [katib localhost] and IPs [10.0.2.15 127.0.0.1 ::1]
+[certs] Generating "ca" certificate and key
+[certs] Generating "apiserver" certificate and key
+[certs] apiserver serving cert is signed for DNS names [katib kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.96.0.1 10.0.2.15]
+[certs] Generating "apiserver-kubelet-client" certificate and key
+[certs] Generating "front-proxy-ca" certificate and key
+[certs] Generating "front-proxy-client" certificate and key
+[certs] Generating "sa" key and public key
+[kubeconfig] Using kubeconfig folder "/etc/kubernetes"
+[kubeconfig] Writing "admin.conf" kubeconfig file
+[kubeconfig] Writing "kubelet.conf" kubeconfig file
+[kubeconfig] Writing "controller-manager.conf" kubeconfig file
+[kubeconfig] Writing "scheduler.conf" kubeconfig file
+[control-plane] Using manifest folder "/etc/kubernetes/manifests"
+[control-plane] Creating static Pod manifest for "kube-apiserver"
+[control-plane] Creating static Pod manifest for "kube-controller-manager"
+[control-plane] Creating static Pod manifest for "kube-scheduler"
+[etcd] Creating static Pod manifest for local etcd in "/etc/kubernetes/manifests"
+[wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory "/etc/kubernetes/manifests". This can take up to 4m0s
+[apiclient] All control plane components are healthy after 35.503642 seconds
+[upload-config] storing the configuration used in ConfigMap "kubeadm-config" in the "kube-system" Namespace
+[kubelet] Creating a ConfigMap "kubelet-config-1.14" in namespace kube-system with the configuration for the kubelets in the cluster
+[upload-certs] Skipping phase. Please see --experimental-upload-certs
+[mark-control-plane] Marking the node katib as control-plane by adding the label "node-role.kubernetes.io/master=''"
+[mark-control-plane] Marking the node katib as control-plane by adding the taints [node-role.kubernetes.io/master:NoSchedule]
+[bootstrap-token] Using token: g82ff7.ostrcfswlrpusek1
+[bootstrap-token] Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles
+[bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials
+[bootstrap-token] configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
+[bootstrap-token] configured RBAC rules to allow certificate rotation for all node client certificates in the cluster
+[bootstrap-token] creating the "cluster-info" ConfigMap in the "kube-public" namespace
+[addons] Applied essential addon: CoreDNS
+[addons] Applied essential addon: kube-proxy
+<p>Your Kubernetes control-plane has initialized successfully!
+...
+NOTES:
+The NFS Provisioner service has now been installed.</p>
+<p>A storage class named 'nfs' has now been created
+and is available to provision dynamic volumes.</p>
+<p>You can use this storageclass by creating a <code>PersistentVolumeClaim</code> with the
+correct storageClassName attribute. For example:</p>
+<pre><code>---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: test-dynamic-volume-claim
+spec:
+  storageClassName: &quot;nfs&quot;
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+</code></pre>
+<font color="green">
+vagrant@katib:~$
+</font>
+</details><h1><a class="header" href="#install-kubeflowkatib" id="install-kubeflowkatib">Install Kubeflow/Katib</a></h1>
 <h1><a class="header" href="#kubeflow" id="kubeflow">Kubeflow</a></h1>
 <h1><a class="header" href="#architecture" id="architecture">Architecture</a></h1>
 <h1><a class="header" href="#jupyter-notebook" id="jupyter-notebook">Jupyter Notebook</a></h1>
