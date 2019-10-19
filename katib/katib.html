@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="../kubernetes/setup.html"><strong aria-hidden="true">1.</strong> Setup Kubernetes</a></li><li><ol class="section"><li><a href="../kubernetes/vb.html"><strong aria-hidden="true">1.1.</strong> Install Virtualbox</a></li><li><a href="../kubernetes/vagrant.html"><strong aria-hidden="true">1.2.</strong> Install Vagrant</a></li><li><a href="../kubernetes/k8s.html"><strong aria-hidden="true">1.3.</strong> Install Kubernetes</a></li></ol></li><li><a href="../kubeflow/install.html"><strong aria-hidden="true">2.</strong> Install Kubeflow/Katib</a></li><li><a href="../kubeflow/kubeflow.html"><strong aria-hidden="true">3.</strong> Kubeflow</a></li><li><ol class="section"><li><a href="../kubeflow/architecture.html"><strong aria-hidden="true">3.1.</strong> Architecture</a></li><li><a href="../kubeflow/jupyter.html"><strong aria-hidden="true">3.2.</strong> Jupyter Notebook</a></li></ol></li><li><a href="../katib/katib.html" class="active"><strong aria-hidden="true">4.</strong> Katib</a></li><li><ol class="section"><li><a href="../katib/hptuning.html"><strong aria-hidden="true">4.1.</strong> Hyperparameter Tuning</a></li><li><a href="../katib/nas.html"><strong aria-hidden="true">4.2.</strong> Neural Architecture Search</a></li></ol></li><li><a href="../references/index.html"><strong aria-hidden="true">5.</strong> References</a></li><li class="spacer"></li></ol>
+                <ol class="chapter"><li><a href="../kubernetes/setup.html"><strong aria-hidden="true">1.</strong> Setup Kubernetes</a></li><li><ol class="section"><li><a href="../kubernetes/vb.html"><strong aria-hidden="true">1.1.</strong> Install Virtualbox</a></li><li><a href="../kubernetes/vagrant.html"><strong aria-hidden="true">1.2.</strong> Install Vagrant</a></li><li><a href="../kubernetes/k8s.html"><strong aria-hidden="true">1.3.</strong> Install Kubernetes</a></li></ol></li><li><a href="../kubeflow/kubeflow.html"><strong aria-hidden="true">2.</strong> Kubeflow</a></li><li><ol class="section"><li><a href="../kubeflow/architecture.html"><strong aria-hidden="true">2.1.</strong> Architecture</a></li><li><a href="../kubeflow/jupyter.html"><strong aria-hidden="true">2.2.</strong> Jupyter Notebook</a></li></ol></li><li><a href="../katib/katib.html" class="active"><strong aria-hidden="true">3.</strong> Katib</a></li><li><ol class="section"><li><a href="../katib/install.html"><strong aria-hidden="true">3.1.</strong> Installation</a></li><li><a href="../katib/hptuning.html"><strong aria-hidden="true">3.2.</strong> Hyperparameter Tuning</a></li><li><a href="../katib/nas.html"><strong aria-hidden="true">3.3.</strong> Neural Architecture Search</a></li></ol></li><li><a href="../references/index.html"><strong aria-hidden="true">4.</strong> References</a></li><li class="spacer"></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,8 +148,15 @@
                         <h1><a class="header" href="#katib" id="katib">Katib</a></h1>
 <p>Katib stands for <code>secretary</code> in Arabic. As <code>Vizier</code> stands for a high official or a prime minister in Arabic, this project Katib is named in the honor of <a href="https://ai.google/research/pubs/pub46180">Vizier</a>.
 Katib is a scalable and extensible <code>Automatic Machine Learning</code>(AutoML) framework on Kubernetes. It supports Hyperparameter tuning and neural architecture search. It enables users to discover models that are as good as hand-crafted models, without having to go through the laborious process of manual configuration and iteration.</p>
-<p>Katib organizes an optimization or neural architecture search as an <em>Experiment</em>.
-<img src="../images/katib.png" alt="" /></p>
+<p>Katib organizes an optimization or neural architecture search as an <code>Experiment</code>. 
+AutoML algorithms run in an interative manner. An <code>Experiment</code> defines the search space, metrics target and maximum number of iterations. Katib searches iteratively in the search space to meet the metrics target or for the maximum number of iterations.
+Katib supports two different mechanisms for AutoML - Hyperparameter Tuning and Neural Architecture Search.</p>
+<h2><a class="header" href="#hyperparameter-tuning" id="hyperparameter-tuning">Hyperparameter Tuning</a></h2>
+<p>Hyperparameter tuning finds the optimal hyperparameter vector for a given model architecture. In each iteration Katib uses a <code>Suggestion</code> algorithm to generate a candidate hyperparameter vector. The candidate hyperparameters are given to a <code>Trial</code> that provides training and validation services. The metrics collected from that trial are fed into the <code>Suggestion</code> algorithm to generate the candidate vector for the next iteration. This process continues till we reach the desired metric goal or the maximum number of iterations if complete.</p>
+<p><img src="../images/hpt.png" alt="Hyperparameter tuning" /></p>
+<p>In this tutorial we will focus on Hyperparameter tuning.</p>
+<h2><a class="header" href="#katib-automl" id="katib-automl">Katib AutoML</a></h2>
+<p><img src="../images/katib.png" alt="Neural Architecture Search" /></p>
 
                     </main>
 
@@ -162,7 +169,7 @@ Katib is a scalable and extensible <code>Automatic Machine Learning</code>(AutoM
                         
 
                         
-                            <a rel="next" href="../katib/hptuning.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../katib/install.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -180,7 +187,7 @@ Katib is a scalable and extensible <code>Automatic Machine Learning</code>(AutoM
                 
 
                 
-                    <a href="../katib/hptuning.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="../katib/install.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

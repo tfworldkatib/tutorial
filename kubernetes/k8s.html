@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="../kubernetes/setup.html"><strong aria-hidden="true">1.</strong> Setup Kubernetes</a></li><li><ol class="section"><li><a href="../kubernetes/vb.html"><strong aria-hidden="true">1.1.</strong> Install Virtualbox</a></li><li><a href="../kubernetes/vagrant.html"><strong aria-hidden="true">1.2.</strong> Install Vagrant</a></li><li><a href="../kubernetes/k8s.html" class="active"><strong aria-hidden="true">1.3.</strong> Install Kubernetes</a></li></ol></li><li><a href="../kubeflow/install.html"><strong aria-hidden="true">2.</strong> Install Kubeflow/Katib</a></li><li><a href="../kubeflow/kubeflow.html"><strong aria-hidden="true">3.</strong> Kubeflow</a></li><li><ol class="section"><li><a href="../kubeflow/architecture.html"><strong aria-hidden="true">3.1.</strong> Architecture</a></li><li><a href="../kubeflow/jupyter.html"><strong aria-hidden="true">3.2.</strong> Jupyter Notebook</a></li></ol></li><li><a href="../katib/katib.html"><strong aria-hidden="true">4.</strong> Katib</a></li><li><ol class="section"><li><a href="../katib/hptuning.html"><strong aria-hidden="true">4.1.</strong> Hyperparameter Tuning</a></li><li><a href="../katib/nas.html"><strong aria-hidden="true">4.2.</strong> Neural Architecture Search</a></li></ol></li><li><a href="../references/index.html"><strong aria-hidden="true">5.</strong> References</a></li><li class="spacer"></li></ol>
+                <ol class="chapter"><li><a href="../kubernetes/setup.html"><strong aria-hidden="true">1.</strong> Setup Kubernetes</a></li><li><ol class="section"><li><a href="../kubernetes/vb.html"><strong aria-hidden="true">1.1.</strong> Install Virtualbox</a></li><li><a href="../kubernetes/vagrant.html"><strong aria-hidden="true">1.2.</strong> Install Vagrant</a></li><li><a href="../kubernetes/k8s.html" class="active"><strong aria-hidden="true">1.3.</strong> Install Kubernetes</a></li></ol></li><li><a href="../kubeflow/kubeflow.html"><strong aria-hidden="true">2.</strong> Kubeflow</a></li><li><ol class="section"><li><a href="../kubeflow/architecture.html"><strong aria-hidden="true">2.1.</strong> Architecture</a></li><li><a href="../kubeflow/jupyter.html"><strong aria-hidden="true">2.2.</strong> Jupyter Notebook</a></li></ol></li><li><a href="../katib/katib.html"><strong aria-hidden="true">3.</strong> Katib</a></li><li><ol class="section"><li><a href="../katib/install.html"><strong aria-hidden="true">3.1.</strong> Installation</a></li><li><a href="../katib/hptuning.html"><strong aria-hidden="true">3.2.</strong> Hyperparameter Tuning</a></li><li><a href="../katib/nas.html"><strong aria-hidden="true">3.3.</strong> Neural Architecture Search</a></li></ol></li><li><a href="../references/index.html"><strong aria-hidden="true">4.</strong> References</a></li><li class="spacer"></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -147,8 +147,7 @@
                     <main>
                         <h1><a class="header" href="#install-kubernetes" id="install-kubernetes">Install Kubernetes</a></h1>
 <p>Create the Vagrant virtual machine that we will use </p>
-<pre><code>vagrant init minikatib/tfworld \
-  --box-version 0.1.0
+<pre><code>vagrant init minikatib/tfworld --box-version 0.1.0
 vagrant up
 </code></pre>
 <p>Login to the VM</p>
@@ -183,11 +182,11 @@ Yes, charms take the Krazy out of K8s Kata Kluster Konstruction.</p>
 vagrant@katib:~$
 </font>
 </details>
-Intialize and configure kubernetes using the start-k8s.sh script.
-```console
-./k8s-config/start-k8s.sh
-```
-This may take around 5-10 minutes.
+<p>Intialize and configure kubernetes using the start-k8s.sh script.</p>
+<pre><code class="language-console">cd ~/k8s-config/
+./start-k8s.sh
+</code></pre>
+<p>This may take around 5-10 minutes.</p>
 <details>
 <summary>
  Sample Output
@@ -244,7 +243,55 @@ This may take around 5-10 minutes.
 [addons] Applied essential addon: kube-proxy
 <p>Your Kubernetes control-plane has initialized successfully!
 ...
-NOTES:
+<font color="green">
+vagrant@katib:~$
+</font></p>
+</details>
+<p>Start helm and install NFS helm chart. This provides dynamic provisioning for Kubernetes workloads.</p>
+<pre><code>./start-helm.sh
+</code></pre>
+<details>
+<summary>
+ Sample Output
+ </summary>
+ serviceaccount/tiller created
+clusterrolebinding.rbac.authorization.k8s.io/tiller created
+$HELM_HOME has been configured at /home/vagrant/.helm.
+<p>Tiller (the Helm server-side component) has been installed into your Kubernetes Cluster.</p>
+<p>Please note: by default, Tiller is deployed with an insecure 'allow unauthenticated users' policy.
+To prevent this, run <code>helm init</code> with the --tiller-tls-verify flag.
+For more information on securing your installation see: https://docs.helm.sh/using_helm/#securing-your-helm-installation
+Hang tight while we grab the latest from your chart repositories...
+...Skip local chart repository
+...Successfully got an update from the &quot;stable&quot; chart repository
+Update Complete.
+NAME:   kf
+LAST DEPLOYED: Sat Oct 19 21:04:27 2019
+NAMESPACE: kube-system
+STATUS: DEPLOYED</p>
+<p>RESOURCES:
+==&gt; v1/ClusterRole
+NAME                       AGE
+kf-nfs-server-provisioner  1s</p>
+<p>==&gt; v1/ClusterRoleBinding
+NAME                       AGE
+kf-nfs-server-provisioner  1s</p>
+<p>==&gt; v1/Pod(related)
+NAME                         READY  STATUS   RESTARTS  AGE
+kf-nfs-server-provisioner-0  0/1    Pending  0         1s</p>
+<p>==&gt; v1/Service
+NAME                       TYPE       CLUSTER-IP    EXTERNAL-IP  PORT(S)                                 AGE
+kf-nfs-server-provisioner  ClusterIP  10.107.30.95  <none>       2049/TCP,20048/TCP,51413/TCP,51413/UDP  1s</p>
+<p>==&gt; v1/ServiceAccount
+NAME                       SECRETS  AGE
+kf-nfs-server-provisioner  1        1s</p>
+<p>==&gt; v1/StorageClass
+NAME  PROVISIONER                              AGE
+nfs   cluster.local/kf-nfs-server-provisioner  1s</p>
+<p>==&gt; v1beta2/StatefulSet
+NAME                       READY  AGE
+kf-nfs-server-provisioner  0/1    1s</p>
+<p>NOTES:
 The NFS Provisioner service has now been installed.</p>
 <p>A storage class named 'nfs' has now been created
 and is available to provision dynamic volumes.</p>
@@ -263,10 +310,9 @@ spec:
     requests:
       storage: 100Mi
 </code></pre>
-<font color="green">
-vagrant@katib:~$
-</font>
 </details>
+<p>Congratulations! Now you have a single node Kubernetes cluster on your laptop. The magic of Kubernetes allows you to run your workloads on this tiny Kubernetes cluster identical to how you would on your production cluster in your datacenter or in a cloud.</p>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
@@ -278,7 +324,7 @@ vagrant@katib:~$
                         
 
                         
-                            <a rel="next" href="../kubeflow/install.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../kubeflow/kubeflow.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -296,7 +342,7 @@ vagrant@katib:~$
                 
 
                 
-                    <a href="../kubeflow/install.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="../kubeflow/kubeflow.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
