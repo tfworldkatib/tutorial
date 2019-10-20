@@ -225,7 +225,8 @@ tf-job-operator-7b589f5f5f-fpr2p    1/1     Running   0          80s</p>
 We have also installed a tf-job-operator and pytorch-operator to be able to run TensorFlow Jobs and PyTorch Jobs.</p>
 <p>TODO: Add Katib diagram here.</p>
 <p>Now, let us connect to Katib UI. To do this we forward the Katib UI service to a port on the Vagrant VM as follows.</p>
-<pre><code class="language-console">kubectl -n kubeflow patch service  katib-ui --patch='{&quot;spec&quot;:{&quot;$setElementOrder/ports&quot;:[{&quot;port&quot;:80}],&quot;ports&quot;:[{&quot;nodePort&quot;:31230,&quot;port&quot;:80}],&quot;type&quot;:&quot;NodePort&quot;}}'
+<pre><code class="language-console">kubectl -n kubeflow patch service  katib-ui \
+    --patch='{&quot;spec&quot;:{&quot;$setElementOrder/ports&quot;:[{&quot;port&quot;:80}],&quot;ports&quot;:[{&quot;nodePort&quot;:31230,&quot;port&quot;:80}],&quot;type&quot;:&quot;NodePort&quot;}}'
 </code></pre>
 <p>Check that the Katib UI service shows as a NodePort service.</p>
 <pre><code class="language-console">kubectl -n kubeflow get svc katib-ui
