@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>(Optional)AutoML Intuition - Hyperparameter tuning for TensorFlow using Katib and Kubeflow</title>
+        <title>(Optional) AutoML Intuition - Hyperparameter tuning for TensorFlow using Katib and Kubeflow</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="../kubernetes/setup.html"><strong aria-hidden="true">1.</strong> Setup Kubernetes</a></li><li><ol class="section"><li><a href="../kubernetes/vb.html"><strong aria-hidden="true">1.1.</strong> Install Virtualbox</a></li><li><a href="../kubernetes/vagrant.html"><strong aria-hidden="true">1.2.</strong> Install Vagrant</a></li><li><a href="../kubernetes/k8s.html"><strong aria-hidden="true">1.3.</strong> Install Kubernetes</a></li></ol></li><li><a href="../kubeflow/kubeflow.html"><strong aria-hidden="true">2.</strong> Kubeflow</a></li><li><ol class="section"><li><a href="../kubeflow/architecture.html"><strong aria-hidden="true">2.1.</strong> Architecture</a></li><li><a href="../kubeflow/jupyter.html"><strong aria-hidden="true">2.2.</strong> Jupyter Notebook</a></li></ol></li><li><a href="../katib/katib.html"><strong aria-hidden="true">3.</strong> Katib</a></li><li><ol class="section"><li><a href="../katib/install.html"><strong aria-hidden="true">3.1.</strong> Installation</a></li><li><a href="../katib/hptuning.html"><strong aria-hidden="true">3.2.</strong> Hyperparameter Tuning</a></li><li><a href="../katib/nas.html"><strong aria-hidden="true">3.3.</strong> Neural Architecture Search</a></li><li><a href="../katib/automl.html" class="active"><strong aria-hidden="true">3.4.</strong> (Optional)AutoML Intuition</a></li></ol></li><li><a href="../cleanup/cleanup.html"><strong aria-hidden="true">4.</strong> Cleanup</a></li><li><a href="../references/index.html"><strong aria-hidden="true">5.</strong> References</a></li><li class="spacer"></li></ol>
+                <ol class="chapter"><li><a href="../kubernetes/setup.html"><strong aria-hidden="true">1.</strong> Setup Kubernetes</a></li><li><ol class="section"><li><a href="../kubernetes/vb.html"><strong aria-hidden="true">1.1.</strong> Install Virtualbox</a></li><li><a href="../kubernetes/vagrant.html"><strong aria-hidden="true">1.2.</strong> Install Vagrant</a></li><li><a href="../kubernetes/k8s.html"><strong aria-hidden="true">1.3.</strong> Install Kubernetes</a></li></ol></li><li><a href="../kubeflow/kubeflow.html"><strong aria-hidden="true">2.</strong> Kubeflow</a></li><li><ol class="section"><li><a href="../kubeflow/architecture.html"><strong aria-hidden="true">2.1.</strong> Architecture</a></li><li><a href="../kubeflow/jupyter.html"><strong aria-hidden="true">2.2.</strong> Jupyter Notebook</a></li></ol></li><li><a href="../katib/katib.html"><strong aria-hidden="true">3.</strong> Katib</a></li><li><ol class="section"><li><a href="../katib/install.html"><strong aria-hidden="true">3.1.</strong> Installation</a></li><li><a href="../katib/hptuning.html"><strong aria-hidden="true">3.2.</strong> Hyperparameter Tuning</a></li><li><a href="../katib/nas.html"><strong aria-hidden="true">3.3.</strong> Neural Architecture Search</a></li><li><a href="../katib/automl.html" class="active"><strong aria-hidden="true">3.4.</strong> (Optional) AutoML Intuition</a></li></ol></li><li><a href="../cleanup/cleanup.html"><strong aria-hidden="true">4.</strong> Cleanup</a></li><li><a href="../references/index.html"><strong aria-hidden="true">5.</strong> References</a></li><li class="spacer"></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -146,11 +146,9 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#automatic-machine-learning" id="automatic-machine-learning">Automatic Machine Learning</a></h1>
-<p>Applied Machine Learning is a highly iterative process. When you are training a neural netwok you have to make a lot of choices - like how many layers does the network have, how many hidden units should have, what is the learning rate, what is the activation function etc. It is almost impossible to correctly guess the correct values all these hyperparameters. Intuitions from one domain do not apply well to another domain. Automatic machine learning promises to automate this process and reduce the manual iteration.</p>
-<p>High Bias - does not perform well on training data. Underfitting. - problem learning
-High Variance - does not perform well on test data, even worse than the error on the taining data. Overfitting. - problem generalizing</p>
-<p>High bias - try bigger network/train longer/try a different architecture
-High variance - try more data, regularization, NN architecture search</p>
+<p>Applied Machine Learning is a highly iterative process. When you are training a neural netwok you have to make a lot of choices - like how many layers does the network have, how many hidden units should have, what is the learning rate, what is the activation function etc. It is almost impossible to correctly guess the correct values all these hyperparameters. Intuitions from one domain do not apply well to another domain. 
+When training a machine learning model, we want to optimize the in-sample error (Bias) and the out-of-sample error(variance). In the past we often saw that improving the bias resulted in over-fitting and high variance and vice versa.
+With the rise of neural networks and big data, improving bias and variance together has become feasible. We can build larger neural networks to reduce bias and train them with more data to reduce variance. How ever this exacerbates the problem of selecting optimal hyperparameters and neural network architectures. This make automaitc machine learning more desirable, but also feasible as we do not have to deal with the bias/variance trade off.</p>
 
                     </main>
 

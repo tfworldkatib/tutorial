@@ -80,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="kubernetes/setup.html"><strong aria-hidden="true">1.</strong> Setup Kubernetes</a></li><li><ol class="section"><li><a href="kubernetes/vb.html"><strong aria-hidden="true">1.1.</strong> Install Virtualbox</a></li><li><a href="kubernetes/vagrant.html"><strong aria-hidden="true">1.2.</strong> Install Vagrant</a></li><li><a href="kubernetes/k8s.html"><strong aria-hidden="true">1.3.</strong> Install Kubernetes</a></li></ol></li><li><a href="kubeflow/kubeflow.html"><strong aria-hidden="true">2.</strong> Kubeflow</a></li><li><ol class="section"><li><a href="kubeflow/architecture.html"><strong aria-hidden="true">2.1.</strong> Architecture</a></li><li><a href="kubeflow/jupyter.html"><strong aria-hidden="true">2.2.</strong> Jupyter Notebook</a></li></ol></li><li><a href="katib/katib.html"><strong aria-hidden="true">3.</strong> Katib</a></li><li><ol class="section"><li><a href="katib/install.html"><strong aria-hidden="true">3.1.</strong> Installation</a></li><li><a href="katib/hptuning.html"><strong aria-hidden="true">3.2.</strong> Hyperparameter Tuning</a></li><li><a href="katib/nas.html"><strong aria-hidden="true">3.3.</strong> Neural Architecture Search</a></li><li><a href="katib/automl.html"><strong aria-hidden="true">3.4.</strong> (Optional)AutoML Intuition</a></li></ol></li><li><a href="cleanup/cleanup.html"><strong aria-hidden="true">4.</strong> Cleanup</a></li><li><a href="references/index.html"><strong aria-hidden="true">5.</strong> References</a></li><li class="spacer"></li></ol>
+                <ol class="chapter"><li><a href="kubernetes/setup.html"><strong aria-hidden="true">1.</strong> Setup Kubernetes</a></li><li><ol class="section"><li><a href="kubernetes/vb.html"><strong aria-hidden="true">1.1.</strong> Install Virtualbox</a></li><li><a href="kubernetes/vagrant.html"><strong aria-hidden="true">1.2.</strong> Install Vagrant</a></li><li><a href="kubernetes/k8s.html"><strong aria-hidden="true">1.3.</strong> Install Kubernetes</a></li></ol></li><li><a href="kubeflow/kubeflow.html"><strong aria-hidden="true">2.</strong> Kubeflow</a></li><li><ol class="section"><li><a href="kubeflow/architecture.html"><strong aria-hidden="true">2.1.</strong> Architecture</a></li><li><a href="kubeflow/jupyter.html"><strong aria-hidden="true">2.2.</strong> Jupyter Notebook</a></li></ol></li><li><a href="katib/katib.html"><strong aria-hidden="true">3.</strong> Katib</a></li><li><ol class="section"><li><a href="katib/install.html"><strong aria-hidden="true">3.1.</strong> Installation</a></li><li><a href="katib/hptuning.html"><strong aria-hidden="true">3.2.</strong> Hyperparameter Tuning</a></li><li><a href="katib/nas.html"><strong aria-hidden="true">3.3.</strong> Neural Architecture Search</a></li><li><a href="katib/automl.html"><strong aria-hidden="true">3.4.</strong> (Optional) AutoML Intuition</a></li></ol></li><li><a href="cleanup/cleanup.html"><strong aria-hidden="true">4.</strong> Cleanup</a></li><li><a href="references/index.html"><strong aria-hidden="true">5.</strong> References</a></li><li class="spacer"></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -160,14 +160,117 @@
 <h1><a class="header" href="#install-vagrant" id="install-vagrant">Install Vagrant</a></h1>
 <p>Follow the instructions <a href="https://www.vagrantup.com/downloads.html">here</a> to install Vagrant for your operating system.</p>
 <h1><a class="header" href="#install-kubernetes" id="install-kubernetes">Install Kubernetes</a></h1>
-<p>Create a folder that will be used as the workspace for the rest of this tutorial.</p>
-<pre><code class="language-console">mkdir minikatib
-cd minikatib
+<p>Clone the repository for this workshop.</p>
+<pre><code class="language-console">git clone https://github.com/neelimamukiri/tfworld
+cd tfworld
 </code></pre>
-<p>Create the Vagrant virtual machine that we will use </p>
-<pre><code class="language-console">vagrant init minikatib/tfworld --box-version 0.2.0
+<p>Start the Vagrant virtual machine that we will use </p>
+<pre><code class="language-console">vagrant up
+</code></pre>
+<details>
+<summary>
+ Sample Output
+ </summary>
 vagrant up
-</code></pre>
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Importing base box 'minikatib/tfworld'...
+==> default: Matching MAC address for NAT networking...
+==> default: Checking if box 'minikatib/tfworld' version '0.2.0' is up to date...
+==> default: Setting the name of the VM: tfworld_default_1571554286050_26802
+==> default: Fixed port collision for 22 => 2222. Now on port 2200.
+==> default: Clearing any previously set network interfaces...
+==> default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+==> default: Forwarding ports...
+    default: 31230 (guest) => 31230 (host) (adapter 1)
+    default: 22 (guest) => 2200 (host) (adapter 1)
+==> default: Running 'pre-boot' VM customizations...
+==> default: Booting VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2200
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+==> default: Machine booted and ready!
+==> default: Checking for guest additions in VM...
+==> default: Mounting shared folders...
+    default: /vagrant => /Users/neelimam/minikatib/t3/tfworld
+==> default: Running provisioner: shell...
+    default: Running: inline script
+    default: [init] Using Kubernetes version: v1.14.8
+    default: [preflight] Running pre-flight checks
+    default: 	[WARNING Service-Docker]: docker service is not enabled, please run 'systemctl enable docker.service'
+    default: 	[WARNING IsDockerSystemdCheck]: detected "cgroupfs" as the Docker cgroup driver. The recommended driver is "systemd". Please follow the guide at https://kubernetes.io/docs/setup/cri/
+    default: [preflight] Pulling images required for setting up a Kubernetes cluster
+    default: [preflight] This might take a minute or two, depending on the speed of your internet connection
+    default: [preflight] You can also perform this action in beforehand using 'kubeadm config images pull'
+    default: [kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
+    default: [kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
+    default: [kubelet-start] Activating the kubelet service
+    default: [certs] Using certificateDir folder "/etc/kubernetes/pki"
+    default: [certs] Generating "ca" certificate and key
+    default: [certs] Generating "apiserver" certificate and key
+    default: [certs] apiserver serving cert is signed for DNS names [katib kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.96.0.1 10.0.2.15]
+    default: [certs] Generating "apiserver-kubelet-client" certificate and key
+    default: [certs] Generating "front-proxy-ca" certificate and key
+    default: [certs] Generating "front-proxy-client" certificate and key
+    default: [certs] Generating "etcd/ca" certificate and key
+    default: [certs] Generating "etcd/server" certificate and key
+    default: [certs] etcd/server serving cert is signed for DNS names [katib localhost] and IPs [10.0.2.15 127.0.0.1 ::1]
+    default: [certs] Generating "etcd/peer" certificate and key
+    default: [certs] etcd/peer serving cert is signed for DNS names [katib localhost] and IPs [10.0.2.15 127.0.0.1 ::1]
+    default: [certs] Generating "etcd/healthcheck-client" certificate and key
+    default: [certs] Generating "apiserver-etcd-client" certificate and key
+    default: [certs] Generating "sa" key and public key
+    default: [kubeconfig] Using kubeconfig folder "/etc/kubernetes"
+    default: [kubeconfig] Writing "admin.conf" kubeconfig file
+    default: [kubeconfig] Writing "kubelet.conf" kubeconfig file
+    default: [kubeconfig] Writing "controller-manager.conf" kubeconfig file
+    default: [kubeconfig] Writing "scheduler.conf" kubeconfig file
+    default: [control-plane] Using manifest folder "/etc/kubernetes/manifests"
+    default: [control-plane] Creating static Pod manifest for "kube-apiserver"
+    default: [control-plane] Creating static Pod manifest for "kube-controller-manager"
+    default: [control-plane] Creating static Pod manifest for "kube-scheduler"
+    default: [etcd] Creating static Pod manifest for local etcd in "/etc/kubernetes/manifests"
+    default: [wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory "/etc/kubernetes/manifests". This can take up to 4m0s
+    default: [apiclient] All control plane components are healthy after 36.003972 seconds
+    default: [upload-config] storing the configuration used in ConfigMap "kubeadm-config" in the "kube-system" Namespace
+    default: [kubelet] Creating a ConfigMap "kubelet-config-1.14" in namespace kube-system with the configuration for the kubelets in the cluster
+    default: [upload-certs] Skipping phase. Please see --experimental-upload-certs
+    default: [mark-control-plane] Marking the node katib as control-plane by adding the label "node-role.kubernetes.io/master=''"
+    default: [mark-control-plane] Marking the node katib as control-plane by adding the taints [node-role.kubernetes.io/master:NoSchedule]
+    default: [bootstrap-token] Using token: 6cvjk2.7kwbwb0oedxmmxnf
+    default: [bootstrap-token] Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles
+    default: [bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials
+    default: [bootstrap-token] configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
+    default: [bootstrap-token] configured RBAC rules to allow certificate rotation for all node client certificates in the cluster
+    default: [bootstrap-token] creating the "cluster-info" ConfigMap in the "kube-public" namespace
+    default: [addons] Applied essential addon: CoreDNS
+    default: [addons] Applied essential addon: kube-proxy
+    default:
+    default: Your Kubernetes control-plane has initialized successfully!
+    default:
+    default: To start using your cluster, you need to run the following as a regular user:
+    default:
+    default:   mkdir -p $HOME/.kube
+    default:   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+    default:   sudo chown $(id -u):$(id -g) $HOME/.kube/config
+    default:
+    default: You should now deploy a pod network to the cluster.
+    default: Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+    default:   https://kubernetes.io/docs/concepts/cluster-administration/addons/
+    default:
+    default: Then you can join any number of worker nodes by running the following on each as root:
+    default:
+    default: kubeadm join 10.0.2.15:6443 --token 6cvjk2.7kwbwb0oedxmmxnf \
+    default:     --discovery-token-ca-cert-hash sha256:081c1fe5d9e42a8d2c85ffc7465a3b606d8ae90e7511861cb7eeba3397a7e3f5
+    default: node/katib untainted
+    default: configmap/kube-router-cfg created
+    default: daemonset.apps/kube-router created
+    default: serviceaccount/kube-router created
+    default: clusterrole.rbac.authorization.k8s.io/kube-router created
+    default: clusterrolebinding.rbac.authorization.k8s.io/kube-router created
+    default: persistentvolume/data-kf-nfs-server-provisioner-0 created
+</details>
 <p>Login to the VM</p>
 <pre><code>vagrant ssh
 </code></pre>
@@ -175,27 +278,116 @@ vagrant up
 <summary>
  Sample Output
  </summary>
+Welcome to Ubuntu 18.04.2 LTS (GNU/Linux 4.15.0-51-generic x86_64)
+<ul>
+<li>Documentation:  https://help.ubuntu.com</li>
+<li>Management:     https://landscape.canonical.com</li>
+<li>Support:        https://ubuntu.com/advantage</li>
+</ul>
+<p>System information as of Sun Oct 20 06:53:33 UTC 2019</p>
+<p>System load:  0.87               Users logged in:            0
+Usage of /:   18.6% of 61.80GB   IP address for eth0:        10.0.2.15
+Memory usage: 14%                IP address for docker0:     172.17.0.1
+Swap usage:   0%                 IP address for kube-bridge: 192.168.0.1
+Processes:    160</p>
+<ul>
+<li>
+<p>Kata Containers are now fully integrated in Charmed Kubernetes 1.16!
+Yes, charms take the Krazy out of K8s Kata Kluster Konstruction.</p>
+<p>https://ubuntu.com/kubernetes/docs/release-notes</p>
+</li>
+</ul>
+<p>111 packages can be updated.
+60 updates are security updates.</p>
+<p>Last login: Sun Oct 20 03:54:17 2019 from 10.0.2.2</p>
 </details>
-<p>Intialize and configure kubernetes using the start-k8s.sh script.</p>
-<pre><code class="language-console">cd $HOME/tfworld/setup/k8s-config/
-./start-k8s.sh
+<p>Kubernetes has been started during VM provisioning. You can confirm this as follows.</p>
+<pre><code class="language-console">kubectl get nodes
 </code></pre>
-<p>This may take around 5-10 minutes.</p>
 <details>
 <summary>
  Sample Output
  </summary>
+ NAME    STATUS   ROLES    AGE     VERSION
+katib   Ready    master   2m15s   v1.14.8
 </details>
 <p>Start helm and install NFS helm chart. This provides dynamic provisioning for Kubernetes workloads.</p>
 <pre><code>cd $HOME/tfworld/setup/k8s-config/
 ./start-helm.sh
 </code></pre>
+<p>This will take a couple of minutes.</p>
 <details>
 <summary>
  Sample Output
  </summary>
+serviceaccount/tiller created
+clusterrolebinding.rbac.authorization.k8s.io/tiller created
+Creating /home/vagrant/.helm
+Creating /home/vagrant/.helm/repository
+Creating /home/vagrant/.helm/repository/cache
+Creating /home/vagrant/.helm/repository/local
+Creating /home/vagrant/.helm/plugins
+Creating /home/vagrant/.helm/starters
+Creating /home/vagrant/.helm/cache/archive
+Creating /home/vagrant/.helm/repository/repositories.yaml
+Adding stable repo with URL: https://kubernetes-charts.storage.googleapis.com
+Adding local repo with URL: http://127.0.0.1:8879/charts
+$HELM_HOME has been configured at /home/vagrant/.helm.
+<p>Tiller (the Helm server-side component) has been installed into your Kubernetes Cluster.</p>
+<p>Please note: by default, Tiller is deployed with an insecure 'allow unauthenticated users' policy.
+To prevent this, run <code>helm init</code> with the --tiller-tls-verify flag.
+For more information on securing your installation see: https://docs.helm.sh/using_helm/#securing-your-helm-installation
+Hang tight while we grab the latest from your chart repositories...
+...Skip local chart repository
+...Successfully got an update from the &quot;stable&quot; chart repository
+Update Complete.
+NAME:   kf
+LAST DEPLOYED: Sun Oct 20 06:56:39 2019
+NAMESPACE: kube-system
+STATUS: DEPLOYED</p>
+<p>RESOURCES:
+==&gt; v1/ClusterRole
+NAME                       AGE
+kf-nfs-server-provisioner  1s</p>
+<p>==&gt; v1/ClusterRoleBinding
+NAME                       AGE
+kf-nfs-server-provisioner  1s</p>
+<p>==&gt; v1/Pod(related)
+NAME                         READY  STATUS   RESTARTS  AGE
+kf-nfs-server-provisioner-0  0/1    Pending  0         1s</p>
+<p>==&gt; v1/Service
+NAME                       TYPE       CLUSTER-IP     EXTERNAL-IP  PORT(S)                                 AGE
+kf-nfs-server-provisioner  ClusterIP  10.100.45.158  <none>       2049/TCP,20048/TCP,51413/TCP,51413/UDP  1s</p>
+<p>==&gt; v1/ServiceAccount
+NAME                       SECRETS  AGE
+kf-nfs-server-provisioner  1        1s</p>
+<p>==&gt; v1/StorageClass
+NAME  PROVISIONER                              AGE
+nfs   cluster.local/kf-nfs-server-provisioner  1s</p>
+<p>==&gt; v1beta2/StatefulSet
+NAME                       READY  AGE
+kf-nfs-server-provisioner  0/1    1s</p>
+<p>NOTES:
+The NFS Provisioner service has now been installed.</p>
+<p>A storage class named 'nfs' has now been created
+and is available to provision dynamic volumes.</p>
+<p>You can use this storageclass by creating a <code>PersistentVolumeClaim</code> with the
+correct storageClassName attribute. For example:</p>
+<pre><code>---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: test-dynamic-volume-claim
+spec:
+  storageClassName: &quot;nfs&quot;
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+</code></pre>
 </details>
-<p>Congratulations! Now you have a single node Kubernetes cluster on your laptop. The magic of Kubernetes allows you to run your workloads on this tiny Kubernetes cluster identical to how you would on your production cluster in your datacenter or in a cloud.</p>
+<p><strong>Congratulations!</strong> Now you have a single node Kubernetes cluster on your laptop. The magic of Kubernetes allows you to run your workloads on this tiny Kubernetes cluster identical to how you would on your production cluster in your datacenter or in a cloud.</p>
 <h1><a class="header" href="#kubeflow" id="kubeflow">Kubeflow</a></h1>
 <h1><a class="header" href="#architecture" id="architecture">Architecture</a></h1>
 <h1><a class="header" href="#jupyter-notebook" id="jupyter-notebook">Jupyter Notebook</a></h1>
@@ -220,37 +412,207 @@ Katib supports two different mechanisms for AutoML - Hyperparameter Tuning and N
 <summary>
  Sample Output
  </summary>
-</details><h1><a class="header" href="#hyperparameter-tuning-1" id="hyperparameter-tuning-1">Hyperparameter Tuning</a></h1>
+ + kubectl apply -f v1alpha3
+namespace/kubeflow created
++ kubectl apply -f v1alpha3/katib-controller
+customresourcedefinition.apiextensions.k8s.io/experiments.kubeflow.org created
+customresourcedefinition.apiextensions.k8s.io/suggestions.kubeflow.org created
+customresourcedefinition.apiextensions.k8s.io/trials.kubeflow.org created
+configmap/katib-config created
+deployment.apps/katib-controller created
+clusterrole.rbac.authorization.k8s.io/katib-controller created
+serviceaccount/katib-controller created
+clusterrolebinding.rbac.authorization.k8s.io/katib-controller created
+secret/katib-controller created
+service/katib-controller created
+configmap/trial-template created
++ kubectl apply -f v1alpha3/manager
+deployment.extensions/katib-manager created
+service/katib-manager created
++ kubectl apply -f v1alpha3/pv
+persistentvolume/katib-mysql created
+persistentvolumeclaim/katib-mysql created
++ kubectl apply -f v1alpha3/db
+deployment.extensions/katib-db created
+secret/katib-db-secrets created
+service/katib-db created
++ kubectl apply -f v1alpha3/ui
+deployment.extensions/katib-ui created
+clusterrole.rbac.authorization.k8s.io/katib-ui created
+serviceaccount/katib-ui created
+clusterrolebinding.rbac.authorization.k8s.io/katib-ui created
+service/katib-ui created
++ kubectl apply -f tf-job
+customresourcedefinition.apiextensions.k8s.io/tfjobs.kubeflow.org created
+serviceaccount/tf-job-dashboard created
+serviceaccount/tf-job-operator created
+clusterrole.rbac.authorization.k8s.io/kubeflow-tfjobs-admin created
+clusterrole.rbac.authorization.k8s.io/kubeflow-tfjobs-edit created
+clusterrole.rbac.authorization.k8s.io/kubeflow-tfjobs-view created
+clusterrole.rbac.authorization.k8s.io/tf-job-operator created
+clusterrolebinding.rbac.authorization.k8s.io/tf-job-operator created
+service/tf-job-operator created
+deployment.apps/tf-job-operator created
++ kubectl apply -f pytorch
+customresourcedefinition.apiextensions.k8s.io/pytorchjobs.kubeflow.org created
+serviceaccount/pytorch-operator created
+clusterrole.rbac.authorization.k8s.io/kubeflow-pytorchjobs-admin created
+clusterrole.rbac.authorization.k8s.io/kubeflow-pytorchjobs-edit created
+clusterrole.rbac.authorization.k8s.io/kubeflow-pytorchjobs-view created
+clusterrole.rbac.authorization.k8s.io/pytorch-operator created
+clusterrolebinding.rbac.authorization.k8s.io/pytorch-operator created
+service/pytorch-operator created
+deployment.apps/pytorch-operator created
+ </details>
+<p>Check that the Katib core components are installed and ready.</p>
+<pre><code> kubectl -n kubeflow get pods
+</code></pre>
+<details>
+<summary>
+ Sample Output
+ </summary>
+<p>NAME                                READY   STATUS    RESTARTS   AGE
+katib-controller-7665868558-nfghw   1/1     Running   1          80s
+katib-db-594756f779-dxttq           1/1     Running   0          81s
+katib-manager-769b7bcbfb-7vvgx      1/1     Running   0          81s
+katib-ui-854969c97-tl4wg            1/1     Running   0          79s
+pytorch-operator-794899d49b-ww59g   1/1     Running   0          79s
+tf-job-operator-7b589f5f5f-fpr2p    1/1     Running   0          80s</p>
+</details>
+<p>katib-controller, katib-manager, katib-db and katib-ui are the core components of Katib.
+We have also installed a tf-job-operator and pytorch-operator to be able to run TensorFlow Jobs and PyTorch Jobs.</p>
+<p>TODO: Add Katib diagram here.</p>
+<h1><a class="header" href="#hyperparameter-tuning-1" id="hyperparameter-tuning-1">Hyperparameter Tuning</a></h1>
 <p>Katib has an extensible architecture for <code>Suggestion</code> algorithms. Today we will look at four of the in-built models.</p>
 <p>Let us start with the <code>random</code> algorithm using a TensorFlow Job example.</p>
-<pre><code class="language-console"> cd $HOME/katib/examples
+<pre><code class="language-console">cd $HOME/tfworld/setup/katib/examples/v1alpha3
 kubectl apply -f tfjob-example.yaml
 </code></pre>
-<p>Check that the <code>Experiment</code> has started.</p>
+<details>
+<summary>
+ Sample Output
+ </summary>
+experiment.kubeflow.org/tfjob-example created
+</details>
+<p>Check that the <code>Experiment</code> <strong>tfjob-example</strong> has started.</p>
 <pre><code class="language-console">kubectl -n kubeflow get experiment
 </code></pre>
 <details>
 <summary>
  Sample Output
  </summary>
-NAME             STATUS    AGE
-tfjob-example    Running   3m30s
-</summary>
-<p>Check the details of the <code>Experiment</code></p>
-<pre><code class="language-console">kubectl -n kubeflow get experiment -o json
+NAME            STATUS    AGE
+tfjob-example   Running   98s
+</details>
+<p>Check the details of the <code>Experiment</code> <strong>tfjob-example</strong></p>
+<pre><code class="language-console">kubectl -n kubeflow get experiment tfjob-example -o json
 </code></pre>
 <details>
 <summary>
  Sample Output
  </summary>
-</summary>
+{
+    "apiVersion": "kubeflow.org/v1alpha3",
+    "kind": "Experiment",
+    "metadata": {
+        "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kubeflow.org/v1alpha3\",\"kind\":\"Experiment\",\"metadata\":{\"annotations\":{},\"name\":\"tfjob-example\",\"namespace\":\"kubeflow\"},\"spec\":{\"algorithm\":{\"algorithmName\":\"random\"},\"maxFailedTrialCount\":3,\"maxTrialCount\":12,\"metricsCollectorSpec\":{\"collector\":{\"kind\":\"TensorFlowEvent\"},\"source\":{\"fileSystemPath\":{\"kind\":\"Directory\",\"path\":\"/train\"}}},\"objective\":{\"goal\":0.99,\"objectiveMetricName\":\"accuracy_1\",\"type\":\"maximize\"},\"parallelTrialCount\":3,\"parameters\":[{\"feasibleSpace\":{\"max\":\"0.05\",\"min\":\"0.01\"},\"name\":\"--learning_rate\",\"parameterType\":\"double\"},{\"feasibleSpace\":{\"max\":\"200\",\"min\":\"100\"},\"name\":\"--batch_size\",\"parameterType\":\"int\"}],\"trialTemplate\":{\"goTemplate\":{\"rawTemplate\":\"apiVersion: \\\"kubeflow.org/v1\\\"\\nkind: TFJob\\nmetadata:\\n  name: {{.Trial}}\\n  namespace: {{.NameSpace}}\\nspec:\\n tfReplicaSpecs:\\n  Worker:\\n    replicas: 1 \\n    restartPolicy: OnFailure\\n    template:\\n      spec:\\n        containers:\\n          - name: tensorflow \\n            image: gcr.io/kubeflow-ci/tf-mnist-with-summaries:1.0\\n            imagePullPolicy: IfNotPresent\\n            command:\\n              - \\\"python\\\"\\n              - \\\"/var/tf_mnist/mnist_with_summaries.py\\\"\\n              - \\\"--log_dir=/train/metrics\\\"\\n              {{- with .HyperParameters}}\\n              {{- range .}}\\n              - \\\"{{.Name}}={{.Value}}\\\"\\n              {{- end}}\\n              {{- end}}\"}}}}\n"
+        },
+        "creationTimestamp": "2019-10-20T07:03:52Z",
+        "finalizers": [
+            "update-prometheus-metrics"
+        ],
+        "generation": 2,
+        "name": "tfjob-example",
+        "namespace": "kubeflow",
+        "resourceVersion": "2219",
+        "selfLink": "/apis/kubeflow.org/v1alpha3/namespaces/kubeflow/experiments/tfjob-example",
+        "uid": "c5e3cdb3-f307-11e9-b489-080027c5bc64"
+    },
+    "spec": {
+        "algorithm": {
+            "algorithmName": "random",
+            "algorithmSettings": null
+        },
+        "maxFailedTrialCount": 3,
+        "maxTrialCount": 12,
+        "metricsCollectorSpec": {
+            "collector": {
+                "kind": "TensorFlowEvent"
+            },
+            "source": {
+                "fileSystemPath": {
+                    "kind": "Directory",
+                    "path": "/train"
+                }
+            }
+        },
+        "objective": {
+            "goal": 0.99,
+            "objectiveMetricName": "accuracy_1",
+            "type": "maximize"
+        },
+        "parallelTrialCount": 3,
+        "parameters": [
+            {
+                "feasibleSpace": {
+                    "max": "0.05",
+                    "min": "0.01"
+                },
+                "name": "--learning_rate",
+                "parameterType": "double"
+            },
+            {
+                "feasibleSpace": {
+                    "max": "200",
+                    "min": "100"
+                },
+                "name": "--batch_size",
+                "parameterType": "int"
+            }
+        ],
+        "trialTemplate": {
+            "goTemplate": {
+                "rawTemplate": "apiVersion: \"kubeflow.org/v1\"\nkind: TFJob\nmetadata:\n  name: {{.Trial}}\n  namespace: {{.NameSpace}}\nspec:\n tfReplicaSpecs:\n  Worker:\n    replicas: 1 \n    restartPolicy: OnFailure\n    template:\n      spec:\n        containers:\n          - name: tensorflow \n            image: gcr.io/kubeflow-ci/tf-mnist-with-summaries:1.0\n            imagePullPolicy: IfNotPresent\n            command:\n              - \"python\"\n              - \"/var/tf_mnist/mnist_with_summaries.py\"\n              - \"--log_dir=/train/metrics\"\n              {{- with .HyperParameters}}\n              {{- range .}}\n              - \"{{.Name}}={{.Value}}\"\n              {{- end}}\n              {{- end}}"
+            }
+        }
+    },
+    "status": {
+        "conditions": [
+            {
+                "lastTransitionTime": "2019-10-20T07:03:52Z",
+                "lastUpdateTime": "2019-10-20T07:03:52Z",
+                "message": "Experiment is created",
+                "reason": "ExperimentCreated",
+                "status": "True",
+                "type": "Created"
+            },
+            {
+                "lastTransitionTime": "2019-10-20T07:05:06Z",
+                "lastUpdateTime": "2019-10-20T07:05:06Z",
+                "message": "Experiment is running",
+                "reason": "ExperimentRunning",
+                "status": "True",
+                "type": "Running"
+            }
+        ],
+        "currentOptimalTrial": {
+            "observation": {
+                "metrics": null
+            },
+            "parameterAssignments": null
+        },
+        "startTime": "2019-10-20T07:03:52Z",
+        "trials": 3,
+        "trialsPending": 3
+    }
+}
+</details>
 <h1><a class="header" href="#neural-architecture-search-1" id="neural-architecture-search-1">Neural Architecture Search</a></h1>
 <h1><a class="header" href="#automatic-machine-learning" id="automatic-machine-learning">Automatic Machine Learning</a></h1>
-<p>Applied Machine Learning is a highly iterative process. When you are training a neural netwok you have to make a lot of choices - like how many layers does the network have, how many hidden units should have, what is the learning rate, what is the activation function etc. It is almost impossible to correctly guess the correct values all these hyperparameters. Intuitions from one domain do not apply well to another domain. Automatic machine learning promises to automate this process and reduce the manual iteration.</p>
-<p>High Bias - does not perform well on training data. Underfitting. - problem learning
-High Variance - does not perform well on test data, even worse than the error on the taining data. Overfitting. - problem generalizing</p>
-<p>High bias - try bigger network/train longer/try a different architecture
-High variance - try more data, regularization, NN architecture search</p>
+<p>Applied Machine Learning is a highly iterative process. When you are training a neural netwok you have to make a lot of choices - like how many layers does the network have, how many hidden units should have, what is the learning rate, what is the activation function etc. It is almost impossible to correctly guess the correct values all these hyperparameters. Intuitions from one domain do not apply well to another domain. 
+When training a machine learning model, we want to optimize the in-sample error (Bias) and the out-of-sample error(variance). In the past we often saw that improving the bias resulted in over-fitting and high variance and vice versa.
+With the rise of neural networks and big data, improving bias and variance together has become feasible. We can build larger neural networks to reduce bias and train them with more data to reduce variance. How ever this exacerbates the problem of selecting optimal hyperparameters and neural network architectures. This make automaitc machine learning more desirable, but also feasible as we do not have to deal with the bias/variance trade off.</p>
 <p>$HOME/tfworld/setup</p>
 <h1><a class="header" href="#references" id="references">References</a></h1>
 
