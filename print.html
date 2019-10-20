@@ -482,6 +482,20 @@ tf-job-operator-7b589f5f5f-fpr2p    1/1     Running   0          80s</p>
 <p>katib-controller, katib-manager, katib-db and katib-ui are the core components of Katib.
 We have also installed a tf-job-operator and pytorch-operator to be able to run TensorFlow Jobs and PyTorch Jobs.</p>
 <p>TODO: Add Katib diagram here.</p>
+<p>Now, let us connect to Katib UI. To do this we forward the Katib UI service to a port on the Vagrant VM as follows.</p>
+<pre><code class="language-console">kubectl -n kubeflow patch service  katib-ui --patch='{&quot;spec&quot;:{&quot;$setElementOrder/ports&quot;:[{&quot;port&quot;:80}],&quot;ports&quot;:[{&quot;nodePort&quot;:31230,&quot;port&quot;:80}],&quot;type&quot;:&quot;NodePort&quot;}}'
+</code></pre>
+<p>Check that the Katib UI service shows as a NodePort service.</p>
+<pre><code class="language-console">kubectl -n kubeflow get svc katib-ui
+</code></pre>
+<details>
+<summary>
+ Sample Output
+ </summary>
+<p>NAME       TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
+katib-ui   NodePort   10.99.22.59   <none>        80:31230/TCP   10h</p>
+</details>
+<p>On your laptop open a browser and go to the <a href="http://127.0.0.1:31230/katib/">Katib UI</a></p>
 <h1><a class="header" href="#hyperparameter-tuning-1" id="hyperparameter-tuning-1">Hyperparameter Tuning</a></h1>
 <p>Katib has an extensible architecture for <code>Suggestion</code> algorithms. Today we will look at four of the in-built models.</p>
 <p>Let us start with the <code>random</code> algorithm using a TensorFlow Job example.</p>
