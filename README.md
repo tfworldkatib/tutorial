@@ -5,11 +5,11 @@ This repository contains the instructions for the tutorial Hyperparameter tuning
 ## Getting Started
 
 ```
-git clone https://github.com/neelimamukiri/tfworld.git
+git clone https://github.com/tfworldkatib/tutorial.git
 cd tfworld
 vagrant up
 ```
 
-See https://neelimamukiri.github.io/tfworld/ for more details
+See https://tfworldkatib.github.io/tutorial/ for more details
 
 
