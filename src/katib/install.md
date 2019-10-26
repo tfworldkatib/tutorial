@@ -4,7 +4,9 @@
 
 Let us start with the install of Katib.
 ```
-cd $HOME/tfworld/setup/katib-install
+cd $HOME
+git clone https://github.com/tfworldkatib/tutorial.git
+cd $HOME/tutorial/setup/katib-install
 ./deploy.sh
 ```
 

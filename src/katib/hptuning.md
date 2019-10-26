@@ -5,7 +5,7 @@ Katib has an extensible architecture for `Suggestion` algorithms. Today we will 
 Let us start with the `random` algorithm using a TensorFlow Job example.
 
 ```console
-cd $HOME/tfworld/setup/katib/examples/v1alpha3
+cd $HOME/tutorial/setup/katib/examples/v1alpha3
 kubectl apply -f tfjob-example.yaml
  ```
  <details>

@@ -1,9 +1,12 @@
 # Summary
 
+- [Setup Prerequisites](prereqs/prereqs.md)
+    - [Install Vagrant](prereqs/vagrant.md)
+    - [Install Virtualbox](prereqs/vb.md)
+    - [Install Virtualbox](prereqs/download.md)
 - [Setup Kubernetes](kubernetes/setup.md)
-    - [Install Virtualbox](kubernetes/vb.md)
-    - [Install Vagrant](kubernetes/vagrant.md)
     - [Install Kubernetes](kubernetes/k8s.md)
+    - [Kubernetes Architecture](kubernetes/architecture.md)
 - [Kubeflow](kubeflow/kubeflow.md)
     - [Architecture](kubeflow/architecture.md)
     - [Jupyter Notebook](kubeflow/jupyter.md)
