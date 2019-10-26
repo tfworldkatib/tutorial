@@ -10,6 +10,7 @@
 - [Katib](katib/katib.md)
     - [Installation](katib/install.md)
     - [Hyperparameter Tuning](katib/hptuning.md)
+        - [Random Search](katib/random.md)
     - [Neural Architecture Search](katib/nas.md)
     - [(Optional) AutoML Intuition](katib/automl.md)
 - [Cleanup](cleanup/cleanup.md)

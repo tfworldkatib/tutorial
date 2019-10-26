@@ -2,8 +2,8 @@
 
 Clone the repository for this workshop.
 ```console
-git clone https://github.com/neelimamukiri/tfworld
-cd tfworld
+git clone https://github.com/tfworldkatib/tutorial
+cd tutorial
 ```
 
 Start the Vagrant virtual machine that we will use 
