@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Installation - Hyperparameter tuning for TensorFlow using Katib and Kubeflow</title>
+        <title>Kubernetes Architecture - Hyperparameter tuning for TensorFlow using Katib and Kubeflow</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="../prereqs/prereqs.html"><strong aria-hidden="true">1.</strong> Setup Prerequisites</a></li><li><ol class="section"><li><a href="../prereqs/vagrant.html"><strong aria-hidden="true">1.1.</strong> Install Vagrant</a></li><li><a href="../prereqs/vb.html"><strong aria-hidden="true">1.2.</strong> Install Virtualbox</a></li><li><a href="../prereqs/download.html"><strong aria-hidden="true">1.3.</strong> Install Virtualbox</a></li></ol></li><li><a href="../kubernetes/setup.html"><strong aria-hidden="true">2.</strong> Setup Kubernetes</a></li><li><ol class="section"><li><a href="../kubernetes/k8s.html"><strong aria-hidden="true">2.1.</strong> Install Kubernetes</a></li><li><a href="../kubernetes/architecture.html"><strong aria-hidden="true">2.2.</strong> Kubernetes Architecture</a></li></ol></li><li><a href="../kubeflow/kubeflow.html"><strong aria-hidden="true">3.</strong> Kubeflow</a></li><li><ol class="section"><li><a href="../kubeflow/architecture.html"><strong aria-hidden="true">3.1.</strong> Architecture</a></li><li><a href="../kubeflow/jupyter.html"><strong aria-hidden="true">3.2.</strong> Jupyter Notebook</a></li></ol></li><li><a href="../katib/katib.html"><strong aria-hidden="true">4.</strong> Katib</a></li><li><ol class="section"><li><a href="../katib/install.html" class="active"><strong aria-hidden="true">4.1.</strong> Installation</a></li><li><a href="../katib/hptuning.html"><strong aria-hidden="true">4.2.</strong> Hyperparameter Tuning</a></li><li><ol class="section"><li><a href="../katib/random.html"><strong aria-hidden="true">4.2.1.</strong> Random Search</a></li></ol></li><li><a href="../katib/nas.html"><strong aria-hidden="true">4.3.</strong> Neural Architecture Search</a></li><li><a href="../katib/automl.html"><strong aria-hidden="true">4.4.</strong> (Optional) AutoML Intuition</a></li></ol></li><li><a href="../cleanup/cleanup.html"><strong aria-hidden="true">5.</strong> Cleanup</a></li><li><a href="../references/index.html"><strong aria-hidden="true">6.</strong> References</a></li><li class="spacer"></li></ol>
+                <ol class="chapter"><li><a href="../prereqs/prereqs.html"><strong aria-hidden="true">1.</strong> Setup Prerequisites</a></li><li><ol class="section"><li><a href="../prereqs/vagrant.html"><strong aria-hidden="true">1.1.</strong> Install Vagrant</a></li><li><a href="../prereqs/vb.html"><strong aria-hidden="true">1.2.</strong> Install Virtualbox</a></li><li><a href="../prereqs/download.html"><strong aria-hidden="true">1.3.</strong> Install Virtualbox</a></li></ol></li><li><a href="../kubernetes/setup.html"><strong aria-hidden="true">2.</strong> Setup Kubernetes</a></li><li><ol class="section"><li><a href="../kubernetes/k8s.html"><strong aria-hidden="true">2.1.</strong> Install Kubernetes</a></li><li><a href="../kubernetes/architecture.html" class="active"><strong aria-hidden="true">2.2.</strong> Kubernetes Architecture</a></li></ol></li><li><a href="../kubeflow/kubeflow.html"><strong aria-hidden="true">3.</strong> Kubeflow</a></li><li><ol class="section"><li><a href="../kubeflow/architecture.html"><strong aria-hidden="true">3.1.</strong> Architecture</a></li><li><a href="../kubeflow/jupyter.html"><strong aria-hidden="true">3.2.</strong> Jupyter Notebook</a></li></ol></li><li><a href="../katib/katib.html"><strong aria-hidden="true">4.</strong> Katib</a></li><li><ol class="section"><li><a href="../katib/install.html"><strong aria-hidden="true">4.1.</strong> Installation</a></li><li><a href="../katib/hptuning.html"><strong aria-hidden="true">4.2.</strong> Hyperparameter Tuning</a></li><li><ol class="section"><li><a href="../katib/random.html"><strong aria-hidden="true">4.2.1.</strong> Random Search</a></li></ol></li><li><a href="../katib/nas.html"><strong aria-hidden="true">4.3.</strong> Neural Architecture Search</a></li><li><a href="../katib/automl.html"><strong aria-hidden="true">4.4.</strong> (Optional) AutoML Intuition</a></li></ol></li><li><a href="../cleanup/cleanup.html"><strong aria-hidden="true">5.</strong> Cleanup</a></li><li><a href="../references/index.html"><strong aria-hidden="true">6.</strong> References</a></li><li class="spacer"></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -145,100 +145,32 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#installation" id="installation">Installation</a></h1>
-<p>Let us start with the install of Katib.</p>
-<pre><code>cd $HOME
-git clone https://github.com/tfworldkatib/tutorial.git
-cd $HOME/tutorial/setup/katib-install
-./deploy.sh
-</code></pre>
-<details>
-<summary>
- Sample Output
- </summary>
- + kubectl apply -f v1alpha3
-namespace/kubeflow created
-+ kubectl apply -f v1alpha3/katib-controller
-customresourcedefinition.apiextensions.k8s.io/experiments.kubeflow.org created
-customresourcedefinition.apiextensions.k8s.io/suggestions.kubeflow.org created
-customresourcedefinition.apiextensions.k8s.io/trials.kubeflow.org created
-configmap/katib-config created
-deployment.apps/katib-controller created
-clusterrole.rbac.authorization.k8s.io/katib-controller created
-serviceaccount/katib-controller created
-clusterrolebinding.rbac.authorization.k8s.io/katib-controller created
-secret/katib-controller created
-service/katib-controller created
-configmap/trial-template created
-+ kubectl apply -f v1alpha3/manager
-deployment.extensions/katib-manager created
-service/katib-manager created
-+ kubectl apply -f v1alpha3/pv
-persistentvolume/katib-mysql created
-persistentvolumeclaim/katib-mysql created
-+ kubectl apply -f v1alpha3/db
-deployment.extensions/katib-db created
-secret/katib-db-secrets created
-service/katib-db created
-+ kubectl apply -f v1alpha3/ui
-deployment.extensions/katib-ui created
-clusterrole.rbac.authorization.k8s.io/katib-ui created
-serviceaccount/katib-ui created
-clusterrolebinding.rbac.authorization.k8s.io/katib-ui created
-service/katib-ui created
-+ kubectl apply -f tf-job
-customresourcedefinition.apiextensions.k8s.io/tfjobs.kubeflow.org created
-serviceaccount/tf-job-dashboard created
-serviceaccount/tf-job-operator created
-clusterrole.rbac.authorization.k8s.io/kubeflow-tfjobs-admin created
-clusterrole.rbac.authorization.k8s.io/kubeflow-tfjobs-edit created
-clusterrole.rbac.authorization.k8s.io/kubeflow-tfjobs-view created
-clusterrole.rbac.authorization.k8s.io/tf-job-operator created
-clusterrolebinding.rbac.authorization.k8s.io/tf-job-operator created
-service/tf-job-operator created
-deployment.apps/tf-job-operator created
-+ kubectl apply -f pytorch
-customresourcedefinition.apiextensions.k8s.io/pytorchjobs.kubeflow.org created
-serviceaccount/pytorch-operator created
-clusterrole.rbac.authorization.k8s.io/kubeflow-pytorchjobs-admin created
-clusterrole.rbac.authorization.k8s.io/kubeflow-pytorchjobs-edit created
-clusterrole.rbac.authorization.k8s.io/kubeflow-pytorchjobs-view created
-clusterrole.rbac.authorization.k8s.io/pytorch-operator created
-clusterrolebinding.rbac.authorization.k8s.io/pytorch-operator created
-service/pytorch-operator created
-deployment.apps/pytorch-operator created
- </details>
-<p>Check that the Katib core components are installed and ready.</p>
-<pre><code> kubectl -n kubeflow get pods
-</code></pre>
-<details>
-<summary>
- Sample Output
- </summary>
-<p>NAME                                READY   STATUS    RESTARTS   AGE
-katib-controller-7665868558-nfghw   1/1     Running   1          80s
-katib-db-594756f779-dxttq           1/1     Running   0          81s
-katib-manager-769b7bcbfb-7vvgx      1/1     Running   0          81s
-katib-ui-854969c97-tl4wg            1/1     Running   0          79s
-pytorch-operator-794899d49b-ww59g   1/1     Running   0          79s
-tf-job-operator-7b589f5f5f-fpr2p    1/1     Running   0          80s</p>
-</details>
-<p>katib-controller, katib-manager, katib-db and katib-ui are the core components of Katib.
-We have also installed a tf-job-operator and pytorch-operator to be able to run TensorFlow Jobs and PyTorch Jobs.</p>
-<p>TODO: Add Katib diagram here.</p>
+                        <h1><a class="header" href="#kubernetes-architecture" id="kubernetes-architecture">Kubernetes Architecture</a></h1>
+<p>A Kubernetes cluster consists of some master components and some worker components. 
+In the single node Kubernetes cluster the master and worker components may run on the same node.
+In a production Kubernetes cluster you typically have one or more master nodes and many worker nodes.</p>
+<p><img src="../images/kubernetes.png" alt="Kubernetes Architecture" /></p>
+<p>Add GVK</p>
+<p>Kubernetes API server has been designed to be extensible. There are three primary mechanisms to extend Kubernetes - </p>
+<ul>
+<li>Plugins</li>
+<li>API Aggregators</li>
+<li>Custom Resources</li>
+</ul>
+<p><img src="../images/operator.png" alt="Kubernetes Extensibility" /></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../katib/katib.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../kubernetes/k8s.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../katib/hptuning.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../kubeflow/kubeflow.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -250,13 +182,13 @@ We have also installed a tf-job-operator and pytorch-operator to be able to run 
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="../katib/katib.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="../kubernetes/k8s.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="../katib/hptuning.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="../kubeflow/kubeflow.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

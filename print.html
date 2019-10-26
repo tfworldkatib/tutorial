@@ -80,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="kubernetes/setup.html"><strong aria-hidden="true">1.</strong> Setup Kubernetes</a></li><li><ol class="section"><li><a href="kubernetes/vb.html"><strong aria-hidden="true">1.1.</strong> Install Virtualbox</a></li><li><a href="kubernetes/vagrant.html"><strong aria-hidden="true">1.2.</strong> Install Vagrant</a></li><li><a href="kubernetes/k8s.html"><strong aria-hidden="true">1.3.</strong> Install Kubernetes</a></li></ol></li><li><a href="kubeflow/kubeflow.html"><strong aria-hidden="true">2.</strong> Kubeflow</a></li><li><ol class="section"><li><a href="kubeflow/architecture.html"><strong aria-hidden="true">2.1.</strong> Architecture</a></li><li><a href="kubeflow/jupyter.html"><strong aria-hidden="true">2.2.</strong> Jupyter Notebook</a></li></ol></li><li><a href="katib/katib.html"><strong aria-hidden="true">3.</strong> Katib</a></li><li><ol class="section"><li><a href="katib/install.html"><strong aria-hidden="true">3.1.</strong> Installation</a></li><li><a href="katib/hptuning.html"><strong aria-hidden="true">3.2.</strong> Hyperparameter Tuning</a></li><li><ol class="section"><li><a href="katib/random.html"><strong aria-hidden="true">3.2.1.</strong> Random Search</a></li></ol></li><li><a href="katib/nas.html"><strong aria-hidden="true">3.3.</strong> Neural Architecture Search</a></li><li><a href="katib/automl.html"><strong aria-hidden="true">3.4.</strong> (Optional) AutoML Intuition</a></li></ol></li><li><a href="cleanup/cleanup.html"><strong aria-hidden="true">4.</strong> Cleanup</a></li><li><a href="references/index.html"><strong aria-hidden="true">5.</strong> References</a></li><li class="spacer"></li></ol>
+                <ol class="chapter"><li><a href="prereqs/prereqs.html"><strong aria-hidden="true">1.</strong> Setup Prerequisites</a></li><li><ol class="section"><li><a href="prereqs/vagrant.html"><strong aria-hidden="true">1.1.</strong> Install Vagrant</a></li><li><a href="prereqs/vb.html"><strong aria-hidden="true">1.2.</strong> Install Virtualbox</a></li><li><a href="prereqs/download.html"><strong aria-hidden="true">1.3.</strong> Install Virtualbox</a></li></ol></li><li><a href="kubernetes/setup.html"><strong aria-hidden="true">2.</strong> Setup Kubernetes</a></li><li><ol class="section"><li><a href="kubernetes/k8s.html"><strong aria-hidden="true">2.1.</strong> Install Kubernetes</a></li><li><a href="kubernetes/architecture.html"><strong aria-hidden="true">2.2.</strong> Kubernetes Architecture</a></li></ol></li><li><a href="kubeflow/kubeflow.html"><strong aria-hidden="true">3.</strong> Kubeflow</a></li><li><ol class="section"><li><a href="kubeflow/architecture.html"><strong aria-hidden="true">3.1.</strong> Architecture</a></li><li><a href="kubeflow/jupyter.html"><strong aria-hidden="true">3.2.</strong> Jupyter Notebook</a></li></ol></li><li><a href="katib/katib.html"><strong aria-hidden="true">4.</strong> Katib</a></li><li><ol class="section"><li><a href="katib/install.html"><strong aria-hidden="true">4.1.</strong> Installation</a></li><li><a href="katib/hptuning.html"><strong aria-hidden="true">4.2.</strong> Hyperparameter Tuning</a></li><li><ol class="section"><li><a href="katib/random.html"><strong aria-hidden="true">4.2.1.</strong> Random Search</a></li></ol></li><li><a href="katib/nas.html"><strong aria-hidden="true">4.3.</strong> Neural Architecture Search</a></li><li><a href="katib/automl.html"><strong aria-hidden="true">4.4.</strong> (Optional) AutoML Intuition</a></li></ol></li><li><a href="cleanup/cleanup.html"><strong aria-hidden="true">5.</strong> Cleanup</a></li><li><a href="references/index.html"><strong aria-hidden="true">6.</strong> References</a></li><li class="spacer"></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -147,7 +147,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#setup-kubernetes" id="setup-kubernetes">Setup Kubernetes</a></h1>
+                        <h1><a class="header" href="#setup-prerequisites" id="setup-prerequisites">Setup Prerequisites</a></h1>
 <p><a href="https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/">Kubernetes (K8s)</a> is an open-source system for automating deployment, scaling, and management of containerized applications. For this tutorial we will setup a single node Kubernetes cluster using <a href="https://www.vagrantup.com/downloads.html">Vagrant</a> and <a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a>.</p>
 <p>Prerequisites:</p>
 <ul>
@@ -155,11 +155,11 @@
 <li>VirtualBox 6.0.14 or later</li>
 <li>Laptop or server with at least 4 CPU cores and 16 Gig of RAM</li>
 </ul>
-<h1><a class="header" href="#install-virtual-box" id="install-virtual-box">Install Virtual Box</a></h1>
-<p>Follow the instructions <a href="https://www.virtualbox.org/wiki/Downloads">here</a> to install VirtualBox for your operating system.</p>
 <h1><a class="header" href="#install-vagrant" id="install-vagrant">Install Vagrant</a></h1>
 <p>Follow the instructions <a href="https://www.vagrantup.com/downloads.html">here</a> to install Vagrant for your operating system.</p>
-<h1><a class="header" href="#install-kubernetes" id="install-kubernetes">Install Kubernetes</a></h1>
+<h1><a class="header" href="#install-virtual-box" id="install-virtual-box">Install Virtual Box</a></h1>
+<p>Follow the instructions <a href="https://www.virtualbox.org/wiki/Downloads">here</a> to install VirtualBox for your operating system.</p>
+<h1><a class="header" href="#download-virtualbox-image" id="download-virtualbox-image">Download Virtualbox Image</a></h1>
 <p>Clone the repository for this workshop.</p>
 <pre><code class="language-console">git clone https://github.com/tfworldkatib/tutorial
 cd tutorial
@@ -271,6 +271,9 @@ Bringing machine 'default' up with 'virtualbox' provider...
     default: clusterrolebinding.rbac.authorization.k8s.io/kube-router created
     default: persistentvolume/data-kf-nfs-server-provisioner-0 created
 </details>
+<h1><a class="header" href="#setup-kubernetes" id="setup-kubernetes">Setup Kubernetes</a></h1>
+<p>You can skip this section if you have an existing Kubernetes cluster with a dynamic volume provisioner.</p>
+<h1><a class="header" href="#install-kubernetes" id="install-kubernetes">Install Kubernetes</a></h1>
 <p>Login to the VM</p>
 <pre><code>vagrant ssh
 </code></pre>
@@ -388,6 +391,19 @@ spec:
 </code></pre>
 </details>
 <p><strong>Congratulations!</strong> Now you have a single node Kubernetes cluster on your laptop. The magic of Kubernetes allows you to run your workloads on this tiny Kubernetes cluster identical to how you would on your production cluster in your datacenter or in a cloud.</p>
+<h1><a class="header" href="#kubernetes-architecture" id="kubernetes-architecture">Kubernetes Architecture</a></h1>
+<p>A Kubernetes cluster consists of some master components and some worker components. 
+In the single node Kubernetes cluster the master and worker components may run on the same node.
+In a production Kubernetes cluster you typically have one or more master nodes and many worker nodes.</p>
+<p><img src="kubernetes/../images/kubernetes.png" alt="Kubernetes Architecture" /></p>
+<p>Add GVK</p>
+<p>Kubernetes API server has been designed to be extensible. There are three primary mechanisms to extend Kubernetes - </p>
+<ul>
+<li>Plugins</li>
+<li>API Aggregators</li>
+<li>Custom Resources</li>
+</ul>
+<p><img src="kubernetes/../images/operator.png" alt="Kubernetes Extensibility" /></p>
 <h1><a class="header" href="#kubeflow" id="kubeflow">Kubeflow</a></h1>
 <h1><a class="header" href="#architecture" id="architecture">Architecture</a></h1>
 <h1><a class="header" href="#jupyter-notebook" id="jupyter-notebook">Jupyter Notebook</a></h1>
@@ -405,7 +421,9 @@ Katib supports two different mechanisms for AutoML - Hyperparameter Tuning and N
 <p><img src="katib/../images/katib.png" alt="Neural Architecture Search" /></p>
 <h1><a class="header" href="#installation" id="installation">Installation</a></h1>
 <p>Let us start with the install of Katib.</p>
-<pre><code>cd $HOME/tfworld/setup/katib-install
+<pre><code>cd $HOME
+git clone https://github.com/tfworldkatib/tutorial.git
+cd $HOME/tutorial/setup/katib-install
 ./deploy.sh
 </code></pre>
 <details>
@@ -485,7 +503,7 @@ We have also installed a tf-job-operator and pytorch-operator to be able to run 
 <h1><a class="header" href="#hyperparameter-tuning-1" id="hyperparameter-tuning-1">Hyperparameter Tuning</a></h1>
 <p>Katib has an extensible architecture for <code>Suggestion</code> algorithms. Today we will look at four of the in-built models.</p>
 <p>Let us start with the <code>random</code> algorithm using a TensorFlow Job example.</p>
-<pre><code class="language-console">cd $HOME/tfworld/setup/katib/examples/v1alpha3
+<pre><code class="language-console">cd $HOME/tutorial/setup/katib/examples/v1alpha3
 kubectl apply -f tfjob-example.yaml
 </code></pre>
 <details>
