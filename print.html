@@ -80,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="prereqs/prereqs.html"><strong aria-hidden="true">1.</strong> Setup Prerequisites</a></li><li><ol class="section"><li><a href="prereqs/vagrant.html"><strong aria-hidden="true">1.1.</strong> Install Vagrant</a></li><li><a href="prereqs/vb.html"><strong aria-hidden="true">1.2.</strong> Install Virtualbox</a></li><li><a href="prereqs/download.html"><strong aria-hidden="true">1.3.</strong> Download Virtualbox VM</a></li></ol></li><li><a href="kubernetes/setup.html"><strong aria-hidden="true">2.</strong> Setup Kubernetes</a></li><li><ol class="section"><li><a href="kubernetes/k8s.html"><strong aria-hidden="true">2.1.</strong> Install Kubernetes</a></li><li><a href="kubernetes/architecture.html"><strong aria-hidden="true">2.2.</strong> Kubernetes Architecture</a></li></ol></li><li><a href="kubeflow/kubeflow.html"><strong aria-hidden="true">3.</strong> Kubeflow</a></li><li><ol class="section"><li><a href="kubeflow/architecture.html"><strong aria-hidden="true">3.1.</strong> Architecture</a></li><li><a href="kubeflow/jupyter.html"><strong aria-hidden="true">3.2.</strong> Jupyter Notebook</a></li></ol></li><li><a href="katib/katib.html"><strong aria-hidden="true">4.</strong> Katib</a></li><li><ol class="section"><li><a href="katib/install.html"><strong aria-hidden="true">4.1.</strong> Installation</a></li><li><a href="katib/hptuning.html"><strong aria-hidden="true">4.2.</strong> Hyperparameter Tuning</a></li><li><ol class="section"><li><a href="katib/random.html"><strong aria-hidden="true">4.2.1.</strong> Random Search</a></li></ol></li><li><a href="katib/nas.html"><strong aria-hidden="true">4.3.</strong> Neural Architecture Search</a></li><li><a href="katib/automl.html"><strong aria-hidden="true">4.4.</strong> (Optional) AutoML Intuition</a></li></ol></li><li><a href="cleanup/cleanup.html"><strong aria-hidden="true">5.</strong> Cleanup</a></li><li><a href="references/index.html"><strong aria-hidden="true">6.</strong> References</a></li><li class="spacer"></li></ol>
+                <ol class="chapter"><li><a href="prereqs/prereqs.html"><strong aria-hidden="true">1.</strong> Setup Prerequisites</a></li><li><ol class="section"><li><a href="prereqs/vagrant.html"><strong aria-hidden="true">1.1.</strong> Install Vagrant</a></li><li><a href="prereqs/vb.html"><strong aria-hidden="true">1.2.</strong> Install Virtualbox</a></li><li><a href="prereqs/download.html"><strong aria-hidden="true">1.3.</strong> Download Virtualbox VM</a></li></ol></li><li><a href="kubernetes/setup.html"><strong aria-hidden="true">2.</strong> Setup Kubernetes</a></li><li><ol class="section"><li><a href="kubernetes/k8s.html"><strong aria-hidden="true">2.1.</strong> Configure Persistent Storage</a></li><li><a href="kubernetes/architecture.html"><strong aria-hidden="true">2.2.</strong> Kubernetes Architecture</a></li></ol></li><li><a href="katib/katib.html"><strong aria-hidden="true">3.</strong> Katib</a></li><li><ol class="section"><li><a href="katib/install.html"><strong aria-hidden="true">3.1.</strong> Installation</a></li><li><a href="katib/hptuning.html"><strong aria-hidden="true">3.2.</strong> Hyperparameter Tuning</a></li><li><ol class="section"><li><a href="katib/random.html"><strong aria-hidden="true">3.2.1.</strong> Random Search</a></li><li><a href="katib/grid.html"><strong aria-hidden="true">3.2.2.</strong> Grid Search</a></li><li><a href="katib/bayesian.html"><strong aria-hidden="true">3.2.3.</strong> Bayesian Optimization</a></li></ol></li><li><a href="katib/nas.html"><strong aria-hidden="true">3.3.</strong> Neural Architecture Search</a></li><li><a href="katib/automl.html"><strong aria-hidden="true">3.4.</strong> (Optional) AutoML Intuition</a></li></ol></li><li><a href="kubeflow/kubeflow.html"><strong aria-hidden="true">4.</strong> Kubeflow</a></li><li><ol class="section"><li><a href="kubeflow/architecture.html"><strong aria-hidden="true">4.1.</strong> Architecture</a></li><li><a href="kubeflow/jupyter.html"><strong aria-hidden="true">4.2.</strong> Jupyter Notebook</a></li></ol></li><li><a href="cleanup/cleanup.html"><strong aria-hidden="true">5.</strong> Cleanup</a></li><li><a href="references/index.html"><strong aria-hidden="true">6.</strong> References</a></li><li class="spacer"></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,8 +148,12 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#setup-prerequisites" id="setup-prerequisites">Setup Prerequisites</a></h1>
+<h3><a class="header" href="#goals" id="goals">Goals</a></h3>
+<p>In this section we will setup a single node Kubernetes cluster.</p>
+<p><code>You can skip this section if you have an existing Kubernetes cluster with a dynamic volume provisioner.</code></p>
+<h3><a class="header" href="#overview" id="overview">Overview</a></h3>
 <p><a href="https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/">Kubernetes (K8s)</a> is an open-source system for automating deployment, scaling, and management of containerized applications. For this tutorial we will setup a single node Kubernetes cluster using <a href="https://www.vagrantup.com/downloads.html">Vagrant</a> and <a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a>.</p>
-<p>Prerequisites:</p>
+<h3><a class="header" href="#prerequisites" id="prerequisites">Prerequisites</a></h3>
 <ul>
 <li>Vagrant 2.2.5 or later</li>
 <li>VirtualBox 6.0.14 or later</li>
@@ -271,8 +275,12 @@ Bringing machine 'default' up with 'virtualbox' provider...
     default: clusterrolebinding.rbac.authorization.k8s.io/kube-router created
     default: persistentvolume/data-kf-nfs-server-provisioner-0 created
 </details>
+<p><code>vagrant up</code> downloads the Virtual Box image for this tutorial and powers it on.
+This may take 15-20 minutes and at the end of it you will have a single node Kubernetes cluster.</p>
 <h1><a class="header" href="#setup-kubernetes" id="setup-kubernetes">Setup Kubernetes</a></h1>
-<p>You can skip this section if you have an existing Kubernetes cluster with a dynamic volume provisioner.</p>
+<h3><a class="header" href="#goals-1" id="goals-1">Goals</a></h3>
+<p>In this section we will configure the single node Kubernetes cluster to support persistent storage.</p>
+<p><code>You can skip this section if you have an existing Kubernetes cluster with a dynamic volume provisioner.</code></p>
 <h1><a class="header" href="#install-kubernetes" id="install-kubernetes">Install Kubernetes</a></h1>
 <p>Login to the VM</p>
 <pre><code>vagrant ssh
@@ -393,31 +401,154 @@ spec:
 <p><strong>Congratulations!</strong> Now you have a single node Kubernetes cluster on your laptop. The magic of Kubernetes allows you to run your workloads on this tiny Kubernetes cluster identical to how you would on your production cluster in your datacenter or in a cloud.</p>
 <h1><a class="header" href="#kubernetes-architecture" id="kubernetes-architecture">Kubernetes Architecture</a></h1>
 <p>A Kubernetes cluster consists of some master components and some worker components. 
-In the single node Kubernetes cluster the master and worker components may run on the same node.
+In a single node Kubernetes cluster, master and worker components may run on the same node.
 In a production Kubernetes cluster you typically have one or more master nodes and many worker nodes.</p>
 <p><img src="kubernetes/../images/kubernetes.png" alt="Kubernetes Architecture" /></p>
-<p>Add GVK</p>
-<p>Kubernetes API server has been designed to be extensible. There are three primary mechanisms to extend Kubernetes - </p>
-<ul>
-<li>Plugins</li>
-<li>API Aggregators</li>
-<li>Custom Resources</li>
-</ul>
+<p>Kubernetes API server is the primary interface to an end user - either using kubectl or client-go or an application using the Kubernetes API.</p>
+<p>Kubernetes API server manages versioned resources. You can add new resource types to a Kubernetes API server.
+Pods, Deployments, Services are examples on built in resources or <code>Kinds</code>. In this tutorial we will be working with custom resources like <code>Experiments</code>, <code>Suggestions</code> and <code>Trials</code>. Resources are grouped together into API groups and are versioned.</p>
+<p>You can explore the API groups and resources available on your Kubernetes cluster as follows.</p>
+<pre><code class="language-console">kubectl api-versions
+</code></pre>
+<details>
+<summary>
+ Sample Output
+ </summary>
+ admissionregistration.k8s.io/v1beta1
+apiextensions.k8s.io/v1beta1
+apiregistration.k8s.io/v1
+apiregistration.k8s.io/v1beta1
+apps/v1
+apps/v1beta1
+apps/v1beta2
+authentication.k8s.io/v1
+authentication.k8s.io/v1beta1
+authorization.k8s.io/v1
+authorization.k8s.io/v1beta1
+autoscaling/v1
+autoscaling/v2beta1
+autoscaling/v2beta2
+batch/v1
+batch/v1beta1
+certificates.k8s.io/v1beta1
+coordination.k8s.io/v1
+coordination.k8s.io/v1beta1
+events.k8s.io/v1beta1
+extensions/v1beta1
+kubeflow.org/v1
+kubeflow.org/v1alpha3
+networking.k8s.io/v1
+networking.k8s.io/v1beta1
+node.k8s.io/v1beta1
+policy/v1beta1
+rbac.authorization.k8s.io/v1
+rbac.authorization.k8s.io/v1beta1
+scheduling.k8s.io/v1
+scheduling.k8s.io/v1beta1
+storage.k8s.io/v1
+storage.k8s.io/v1beta1
+v1
+ </details>
+<p>You can see the available Kubernetes resources(<code>Kinds</code>) as follows.</p>
+<pre><code class="language-console">kubectl api-resources
+</code></pre>
+<details>
+<summary>
+ Sample Output
+ </summary>
+ NAME                              SHORTNAMES   APIGROUP                       NAMESPACED   KIND
+bindings                                                                      true         Binding
+componentstatuses                 cs                                          false        ComponentStatus
+configmaps                        cm                                          true         ConfigMap
+endpoints                         ep                                          true         Endpoints
+events                            ev                                          true         Event
+limitranges                       limits                                      true         LimitRange
+namespaces                        ns                                          false        Namespace
+nodes                             no                                          false        Node
+persistentvolumeclaims            pvc                                         true         PersistentVolumeClaim
+persistentvolumes                 pv                                          false        PersistentVolume
+pods                              po                                          true         Pod
+podtemplates                                                                  true         PodTemplate
+replicationcontrollers            rc                                          true         ReplicationController
+resourcequotas                    quota                                       true         ResourceQuota
+secrets                                                                       true         Secret
+serviceaccounts                   sa                                          true         ServiceAccount
+services                          svc                                         true         Service
+mutatingwebhookconfigurations                  admissionregistration.k8s.io   false        MutatingWebhookConfiguration
+validatingwebhookconfigurations                admissionregistration.k8s.io   false        ValidatingWebhookConfiguration
+customresourcedefinitions         crd,crds     apiextensions.k8s.io           false        CustomResourceDefinition
+apiservices                                    apiregistration.k8s.io         false        APIService
+controllerrevisions                            apps                           true         ControllerRevision
+daemonsets                        ds           apps                           true         DaemonSet
+deployments                       deploy       apps                           true         Deployment
+replicasets                       rs           apps                           true         ReplicaSet
+statefulsets                      sts          apps                           true         StatefulSet
+tokenreviews                                   authentication.k8s.io          false        TokenReview
+localsubjectaccessreviews                      authorization.k8s.io           true         LocalSubjectAccessReview
+selfsubjectaccessreviews                       authorization.k8s.io           false        SelfSubjectAccessReview
+selfsubjectrulesreviews                        authorization.k8s.io           false        SelfSubjectRulesReview
+subjectaccessreviews                           authorization.k8s.io           false        SubjectAccessReview
+horizontalpodautoscalers          hpa          autoscaling                    true         HorizontalPodAutoscaler
+cronjobs                          cj           batch                          true         CronJob
+jobs                                           batch                          true         Job
+certificatesigningrequests        csr          certificates.k8s.io            false        CertificateSigningRequest
+leases                                         coordination.k8s.io            true         Lease
+events                            ev           events.k8s.io                  true         Event
+daemonsets                        ds           extensions                     true         DaemonSet
+deployments                       deploy       extensions                     true         Deployment
+ingresses                         ing          extensions                     true         Ingress
+networkpolicies                   netpol       extensions                     true         NetworkPolicy
+podsecuritypolicies               psp          extensions                     false        PodSecurityPolicy
+replicasets                       rs           extensions                     true         ReplicaSet
+experiments                                    kubeflow.org                   true         Experiment
+pytorchjobs                                    kubeflow.org                   true         PyTorchJob
+suggestions                                    kubeflow.org                   true         Suggestion
+tfjobs                                         kubeflow.org                   true         TFJob
+trials                                         kubeflow.org                   true         Trial
+ingresses                         ing          networking.k8s.io              true         Ingress
+networkpolicies                   netpol       networking.k8s.io              true         NetworkPolicy
+runtimeclasses                                 node.k8s.io                    false        RuntimeClass
+poddisruptionbudgets              pdb          policy                         true         PodDisruptionBudget
+podsecuritypolicies               psp          policy                         false        PodSecurityPolicy
+clusterrolebindings                            rbac.authorization.k8s.io      false        ClusterRoleBinding
+clusterroles                                   rbac.authorization.k8s.io      false        ClusterRole
+rolebindings                                   rbac.authorization.k8s.io      true         RoleBinding
+roles                                          rbac.authorization.k8s.io      true         Role
+priorityclasses                   pc           scheduling.k8s.io              false        PriorityClass
+csidrivers                                     storage.k8s.io                 false        CSIDriver
+csinodes                                       storage.k8s.io                 false        CSINode
+storageclasses                    sc           storage.k8s.io                 false        StorageClass
+volumeattachments                              storage.k8s.io                 false        VolumeAttachment
+</details>
+<p>Kubernetes supports <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/extend-cluster/">various</a> types of extension capabilites at all layers, starting with the API server, scheduler, controllers all the way to the kubelet. One of the common patterns used to add new resources and capabilities to the Kubernetes API server is called the Operator Pattern. This consists of creating a custom resource(<code>Kind</code>) and a controller that manages this custom resource.
+Kubeflow and Katib use this extensively. This allows Kubeflow and Katib to be integrated with Kubernetes. You can manage and interact with Kubeflow and Katib components just as you interact with any other Kubernetes component!</p>
 <p><img src="kubernetes/../images/operator.png" alt="Kubernetes Extensibility" /></p>
-<h1><a class="header" href="#kubeflow" id="kubeflow">Kubeflow</a></h1>
-<h1><a class="header" href="#architecture" id="architecture">Architecture</a></h1>
-<h1><a class="header" href="#jupyter-notebook" id="jupyter-notebook">Jupyter Notebook</a></h1>
-<h1><a class="header" href="#katib" id="katib">Katib</a></h1>
-<p>Katib stands for <code>secretary</code> in Arabic. As <code>Vizier</code> stands for a high official or a prime minister in Arabic, this project Katib is named in the honor of <a href="https://ai.google/research/pubs/pub46180">Vizier</a>.
-Katib is a scalable and extensible <code>Automatic Machine Learning</code>(AutoML) framework on Kubernetes. It supports Hyperparameter tuning and neural architecture search. It enables users to discover models that are as good as hand-crafted models, without having to go through the laborious process of manual configuration and iteration.</p>
+<p>You can see the available Kubernetes custom resource definitions as follows.</p>
+<pre><code class="language-console">kubectl get crds
+</code></pre>
+<details>
+<summary>
+ Sample Output
+ </summary>
+ NAME                       CREATED AT
+experiments.kubeflow.org   2019-10-26T21:00:25Z
+pytorchjobs.kubeflow.org   2019-10-26T21:00:27Z
+suggestions.kubeflow.org   2019-10-26T21:00:25Z
+tfjobs.kubeflow.org        2019-10-26T21:00:27Z
+trials.kubeflow.org        2019-10-26T21:00:25Z
+</details><h1><a class="header" href="#katib" id="katib">Katib</a></h1>
+<p>Katib is a scalable and extensible <code>Automatic Machine Learning</code>(AutoML) framework on Kubernetes. It supports Hyperparameter tuning and neural architecture search. It enables users to discover models that are as good as hand-crafted models, without having to go through the laborious process of manual configuration and iteration.</p>
 <p>Katib organizes an optimization or neural architecture search as an <code>Experiment</code>. 
 AutoML algorithms run in an interative manner. An <code>Experiment</code> defines the search space, metrics target and maximum number of iterations. Katib searches iteratively in the search space to meet the metrics target or for the maximum number of iterations.
 Katib supports two different mechanisms for AutoML - Hyperparameter Tuning and Neural Architecture Search.</p>
+<h2><a class="header" href="#etymology" id="etymology">Etymology</a></h2>
+<p>Katib stands for <code>secretary</code> in Arabic. As <code>Vizier</code> stands for a high official or a prime minister in Arabic, this project Katib is named in the honor of <a href="https://ai.google/research/pubs/pub46180">Vizier</a>.</p>
 <h2><a class="header" href="#hyperparameter-tuning" id="hyperparameter-tuning">Hyperparameter Tuning</a></h2>
 <p>Hyperparameter tuning finds the optimal hyperparameter vector for a given model architecture. In each iteration Katib uses a <code>Suggestion</code> algorithm to generate a candidate hyperparameter vector. The candidate hyperparameters are given to a <code>Trial</code> that provides training and validation services. The metrics collected from that trial are fed into the <code>Suggestion</code> algorithm to generate the candidate vector for the next iteration. This process continues till we reach the desired metric goal or the maximum number of iterations if complete.</p>
 <p><img src="katib/../images/hpt.png" alt="Hyperparameter tuning" /></p>
 <p>In this tutorial we will focus on Hyperparameter tuning.</p>
 <h2><a class="header" href="#neural-architecture-search" id="neural-architecture-search">Neural Architecture Search</a></h2>
+<p>Neural Architecture Search finds the optimal neural architecture for a given dataset.</p>
 <p><img src="katib/../images/katib.png" alt="Neural Architecture Search" /></p>
 <h1><a class="header" href="#installation" id="installation">Installation</a></h1>
 <p>Let us start with the install of Katib.</p>
@@ -501,18 +632,26 @@ tf-job-operator-7b589f5f5f-fpr2p    1/1     Running   0          80s</p>
 We have also installed a tf-job-operator and pytorch-operator to be able to run TensorFlow Jobs and PyTorch Jobs.</p>
 <p>TODO: Add Katib diagram here.</p>
 <h1><a class="header" href="#hyperparameter-tuning-1" id="hyperparameter-tuning-1">Hyperparameter Tuning</a></h1>
+<hr />
+<p><em>This step takes about 10-15 mins to complete. Your Vagrant VM will likely be very busy at this time.
+Please do not try to run multiple experiments on this simultaneously.</em></p>
+<hr />
 <p>Katib has an extensible architecture for <code>Suggestion</code> algorithms. Today we will look at four of the in-built models.</p>
 <p>Let us start with the <code>random</code> algorithm using a TensorFlow Job example.</p>
-<pre><code class="language-console">cd $HOME/tutorial/setup/katib/examples/v1alpha3
-kubectl apply -f tfjob-example.yaml
+<h1><a class="header" href="#random-search" id="random-search">Random Search</a></h1>
+<h3><a class="header" href="#experiment" id="experiment">Experiment</a></h3>
+<p>Let us start by creating an experiment.</p>
+<p><img src="katib/../images/experiment.png" alt="Experiment" /></p>
+<pre><code class="language-console">cd $HOME/tutorial/examples/v1alpha3
+kubectl apply -f tfjob-random.yaml
 </code></pre>
 <details>
 <summary>
  Sample Output
  </summary>
-experiment.kubeflow.org/tfjob-example created
+experiment.kubeflow.org/tfjob-random created
 </details>
-<p>Check that the <code>Experiment</code> <strong>tfjob-example</strong> has started.</p>
+<p>Check that the <code>Experiment</code> <strong>tfjob-random</strong> has started.</p>
 <pre><code class="language-console">kubectl -n kubeflow get experiment
 </code></pre>
 <details>
@@ -520,10 +659,10 @@ experiment.kubeflow.org/tfjob-example created
  Sample Output
  </summary>
 NAME            STATUS    AGE
-tfjob-example   Running   98s
+tfjob-random   Running   98s
 </details>
-<p>Check the details of the <code>Experiment</code> <strong>tfjob-example</strong></p>
-<pre><code class="language-console">kubectl -n kubeflow get experiment tfjob-example -o json
+<p>Check the details of the <code>Experiment</code> <strong>tfjob-random</strong></p>
+<pre><code class="language-console">kubectl -n kubeflow get experiment tfjob-random -o json
 </code></pre>
 <details>
 <summary>
@@ -534,18 +673,18 @@ tfjob-example   Running   98s
     "kind": "Experiment",
     "metadata": {
         "annotations": {
-            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kubeflow.org/v1alpha3\",\"kind\":\"Experiment\",\"metadata\":{\"annotations\":{},\"name\":\"tfjob-example\",\"namespace\":\"kubeflow\"},\"spec\":{\"algorithm\":{\"algorithmName\":\"random\"},\"maxFailedTrialCount\":3,\"maxTrialCount\":12,\"metricsCollectorSpec\":{\"collector\":{\"kind\":\"TensorFlowEvent\"},\"source\":{\"fileSystemPath\":{\"kind\":\"Directory\",\"path\":\"/train\"}}},\"objective\":{\"goal\":0.99,\"objectiveMetricName\":\"accuracy_1\",\"type\":\"maximize\"},\"parallelTrialCount\":3,\"parameters\":[{\"feasibleSpace\":{\"max\":\"0.05\",\"min\":\"0.01\"},\"name\":\"--learning_rate\",\"parameterType\":\"double\"},{\"feasibleSpace\":{\"max\":\"200\",\"min\":\"100\"},\"name\":\"--batch_size\",\"parameterType\":\"int\"}],\"trialTemplate\":{\"goTemplate\":{\"rawTemplate\":\"apiVersion: \\\"kubeflow.org/v1\\\"\\nkind: TFJob\\nmetadata:\\n  name: {{.Trial}}\\n  namespace: {{.NameSpace}}\\nspec:\\n tfReplicaSpecs:\\n  Worker:\\n    replicas: 1 \\n    restartPolicy: OnFailure\\n    template:\\n      spec:\\n        containers:\\n          - name: tensorflow \\n            image: gcr.io/kubeflow-ci/tf-mnist-with-summaries:1.0\\n            imagePullPolicy: IfNotPresent\\n            command:\\n              - \\\"python\\\"\\n              - \\\"/var/tf_mnist/mnist_with_summaries.py\\\"\\n              - \\\"--log_dir=/train/metrics\\\"\\n              {{- with .HyperParameters}}\\n              {{- range .}}\\n              - \\\"{{.Name}}={{.Value}}\\\"\\n              {{- end}}\\n              {{- end}}\"}}}}\n"
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kubeflow.org/v1alpha3\",\"kind\":\"Experiment\",\"metadata\":{\"annotations\":{},\"name\":\"tfjob-random\",\"namespace\":\"kubeflow\"},\"spec\":{\"algorithm\":{\"algorithmName\":\"random\"},\"maxFailedTrialCount\":3,\"maxTrialCount\":12,\"metricsCollectorSpec\":{\"collector\":{\"kind\":\"TensorFlowEvent\"},\"source\":{\"fileSystemPath\":{\"kind\":\"Directory\",\"path\":\"/train\"}}},\"objective\":{\"goal\":0.99,\"objectiveMetricName\":\"accuracy_1\",\"type\":\"maximize\"},\"parallelTrialCount\":3,\"parameters\":[{\"feasibleSpace\":{\"max\":\"0.05\",\"min\":\"0.01\"},\"name\":\"--learning_rate\",\"parameterType\":\"double\"},{\"feasibleSpace\":{\"max\":\"200\",\"min\":\"100\"},\"name\":\"--batch_size\",\"parameterType\":\"int\"}],\"trialTemplate\":{\"goTemplate\":{\"rawTemplate\":\"apiVersion: \\\"kubeflow.org/v1\\\"\\nkind: TFJob\\nmetadata:\\n  name: {{.Trial}}\\n  namespace: {{.NameSpace}}\\nspec:\\n tfReplicaSpecs:\\n  Worker:\\n    replicas: 1 \\n    restartPolicy: OnFailure\\n    template:\\n      spec:\\n        containers:\\n          - name: tensorflow \\n            image: gcr.io/kubeflow-ci/tf-mnist-with-summaries:1.0\\n            imagePullPolicy: IfNotPresent\\n            command:\\n              - \\\"python\\\"\\n              - \\\"/var/tf_mnist/mnist_with_summaries.py\\\"\\n              - \\\"--log_dir=/train/metrics\\\"\\n              {{- with .HyperParameters}}\\n              {{- range .}}\\n              - \\\"{{.Name}}={{.Value}}\\\"\\n              {{- end}}\\n              {{- end}}\"}}}}\n"
         },
-        "creationTimestamp": "2019-10-20T07:03:52Z",
+        "creationTimestamp": "2019-10-27T02:46:02Z",
         "finalizers": [
             "update-prometheus-metrics"
         ],
         "generation": 2,
-        "name": "tfjob-example",
+        "name": "tfjob-random",
         "namespace": "kubeflow",
-        "resourceVersion": "2219",
-        "selfLink": "/apis/kubeflow.org/v1alpha3/namespaces/kubeflow/experiments/tfjob-example",
-        "uid": "c5e3cdb3-f307-11e9-b489-080027c5bc64"
+        "resourceVersion": "21979",
+        "selfLink": "/apis/kubeflow.org/v1alpha3/namespaces/kubeflow/experiments/tfjob-random",
+        "uid": "e9f888cb-f863-11e9-88ef-080027c5bc64"
     },
     "spec": {
         "algorithm": {
@@ -596,22 +735,15 @@ tfjob-example   Running   98s
         }
     },
     "status": {
+        "completionTime": null,
         "conditions": [
             {
-                "lastTransitionTime": "2019-10-20T07:03:52Z",
-                "lastUpdateTime": "2019-10-20T07:03:52Z",
+                "lastTransitionTime": "2019-10-27T02:46:02Z",
+                "lastUpdateTime": "2019-10-27T02:46:02Z",
                 "message": "Experiment is created",
                 "reason": "ExperimentCreated",
                 "status": "True",
                 "type": "Created"
-            },
-            {
-                "lastTransitionTime": "2019-10-20T07:05:06Z",
-                "lastUpdateTime": "2019-10-20T07:05:06Z",
-                "message": "Experiment is running",
-                "reason": "ExperimentRunning",
-                "status": "True",
-                "type": "Running"
             }
         ],
         "currentOptimalTrial": {
@@ -620,170 +752,289 @@ tfjob-example   Running   98s
             },
             "parameterAssignments": null
         },
-        "startTime": "2019-10-20T07:03:52Z",
-        "trials": 3,
-        "trialsPending": 3
+        "startTime": "2019-10-27T02:46:02Z"
     }
 }
 </details>
-<p>You can see Katib creating multiple <code>Trial</code> worker pods.</p>
-<pre><code class="language-console">kubectl -n kubeflow get pods
+<p>Under the hood, Katib controller is looping in a reconcile loop to satisfy this <code>Experiment</code> request.</p>
+<p><img src="katib/../images/trials.png" alt="Trials" /></p>
+<h3><a class="header" href="#suggestions" id="suggestions">Suggestions</a></h3>
+<p>You can see Katib creating <code>Suggestions</code> using the <code>random</code> algorithm.</p>
+<pre><code class="language-console">kubectl -n kubeflow  get suggestions tfjob-random -o yaml
+</code></pre>
+<details>
+<summary>
+ Sample Output - before suggestions are ready
+ </summary>
+apiVersion: kubeflow.org/v1alpha3
+kind: Suggestion
+metadata:
+  creationTimestamp: "2019-10-27T02:57:58Z"
+  generation: 1
+  name: tfjob-random
+  namespace: kubeflow
+  ownerReferences:
+  - apiVersion: kubeflow.org/v1alpha3
+    blockOwnerDeletion: true
+    controller: true
+    kind: Experiment
+    name: tfjob-random
+    uid: 94e07a51-f865-11e9-88ef-080027c5bc64
+  resourceVersion: "24296"
+  selfLink: /apis/kubeflow.org/v1alpha3/namespaces/kubeflow/suggestions/tfjob-random
+  uid: 94e5930d-f865-11e9-88ef-080027c5bc64
+spec:
+  algorithmName: random
+  requests: 3
+status:
+  conditions:
+  - lastTransitionTime: "2019-10-27T02:57:58Z"
+    lastUpdateTime: "2019-10-27T02:57:58Z"
+    message: Suggestion is created
+    reason: SuggestionCreated
+    status: "True"
+    type: Created
+  - lastTransitionTime: "2019-10-27T02:57:58Z"
+    lastUpdateTime: "2019-10-27T02:57:58Z"
+    message: Deployment is not ready
+    reason: DeploymentNotReady
+    status: "False"
+    type: DeploymentReady
+  startTime: "2019-10-27T02:57:58Z"
+</details>
+<p>We now have a <code>Suggestion</code> resource created. The Katib Suggestion Service takes control and generates a deployment to run the specified Suggestion.</p>
+<p><img src="katib/../images/suggestion.png" alt="Suggestion" />
+The suggestion service provides suggestions based on the current state of the system. On each new suggestion request, it reevaluates and provides the next best set of suggestions.</p>
+<details>
+<summary>
+ Sample Output - after suggestions are ready
+ </summary>
+ apiVersion: v1
+items:
+- apiVersion: kubeflow.org/v1alpha3
+  kind: Suggestion
+  metadata:
+    creationTimestamp: "2019-10-27T02:57:58Z"
+    generation: 10
+    name: tfjob-random
+    namespace: kubeflow
+    ownerReferences:
+    - apiVersion: kubeflow.org/v1alpha3
+      blockOwnerDeletion: true
+      controller: true
+      kind: Experiment
+      name: tfjob-random
+      uid: 94e07a51-f865-11e9-88ef-080027c5bc64
+    resourceVersion: "25675"
+    selfLink: /apis/kubeflow.org/v1alpha3/namespaces/kubeflow/suggestions/tfjob-random
+    uid: 94e5930d-f865-11e9-88ef-080027c5bc64
+  spec:
+    algorithmName: random
+    requests: 12
+  status:
+    conditions:
+    - lastTransitionTime: "2019-10-27T02:57:58Z"
+      lastUpdateTime: "2019-10-27T02:57:58Z"
+      message: Suggestion is created
+      reason: SuggestionCreated
+      status: "True"
+      type: Created
+    - lastTransitionTime: "2019-10-27T02:58:16Z"
+      lastUpdateTime: "2019-10-27T02:58:16Z"
+      message: Deployment is ready
+      reason: DeploymentReady
+      status: "True"
+      type: DeploymentReady
+    - lastTransitionTime: "2019-10-27T02:59:16Z"
+      lastUpdateTime: "2019-10-27T02:59:16Z"
+      message: Suggestion is running
+      reason: SuggestionRunning
+      status: "True"
+      type: Running
+    startTime: "2019-10-27T02:57:58Z"
+    suggestionCount: 12
+    suggestions:
+    - name: tfjob-random-npjpbgmd
+      parameterAssignments:
+      - name: --learning_rate
+        value: "0.03684477847537918"
+      - name: --batch_size
+        value: "112"
+    - name: tfjob-random-mmc8dqvq
+      parameterAssignments:
+      - name: --learning_rate
+        value: "0.010960280128777096"
+      - name: --batch_size
+        value: "126"
+    - name: tfjob-random-6h7229dt
+      parameterAssignments:
+      - name: --learning_rate
+        value: "0.011672960430260329"
+      - name: --batch_size
+        value: "181"
+    - name: tfjob-random-hfzrfh8j
+      parameterAssignments:
+      - name: --learning_rate
+        value: "0.03510831325099869"
+      - name: --batch_size
+        value: "156"
+    - name: tfjob-random-7kg9zhrt
+      parameterAssignments:
+      - name: --learning_rate
+        value: "0.02709470325001432"
+      - name: --batch_size
+        value: "157"
+    - name: tfjob-random-gng5qx9x
+      parameterAssignments:
+      - name: --learning_rate
+        value: "0.021854230935173045"
+      - name: --batch_size
+        value: "148"
+    - name: tfjob-random-5sfxkhmc
+      parameterAssignments:
+      - name: --learning_rate
+        value: "0.011053371330636894"
+      - name: --batch_size
+        value: "131"
+    - name: tfjob-random-7bzhkvvd
+      parameterAssignments:
+      - name: --learning_rate
+        value: "0.039025808494984444"
+      - name: --batch_size
+        value: "139"
+    - name: tfjob-random-xjm458qc
+      parameterAssignments:
+      - name: --learning_rate
+        value: "0.023093126743054533"
+      - name: --batch_size
+        value: "105"
+    - name: tfjob-random-zb89h929
+      parameterAssignments:
+      - name: --learning_rate
+        value: "0.017877859019641958"
+      - name: --batch_size
+        value: "192"
+    - name: tfjob-random-wqglhpqj
+      parameterAssignments:
+      - name: --learning_rate
+        value: "0.018670804338535255"
+      - name: --batch_size
+        value: "191"
+    - name: tfjob-random-484zhpzq
+      parameterAssignments:
+      - name: --learning_rate
+        value: "0.029127223437729596"
+      - name: --batch_size
+        value: "133"
+</details>
+<h3><a class="header" href="#trials" id="trials">Trials</a></h3>
+<p>Once the suggestions are ready, Katib Trail controller is ready to run the trials.
+Each <code>Trial</code> evaluates the performance for the suggested hyperparameter vector and records the performance in the metric collector.</p>
+<p><img src="katib/../images/trials.png" alt="Suggestion" /></p>
+<p>You can see Katib creating multiple <code>Trials</code>.</p>
+<pre><code class="language-console">kubectl -n kubeflow get trials
 </code></pre>
 <details>
 <summary>
  Sample Output
  </summary>
-NAME                                    READY   STATUS    RESTARTS   AGE
-katib-controller-7665868558-nfghw       1/1     Running   1          6m6s
-katib-db-594756f779-dxttq               1/1     Running   0          6m7s
-katib-manager-769b7bcbfb-7vvgx          1/1     Running   0          6m7s
-katib-ui-854969c97-tl4wg                1/1     Running   0          6m5s
-pytorch-operator-794899d49b-ww59g       1/1     Running   0          6m5s
-tf-job-operator-7b589f5f5f-fpr2p        1/1     Running   0          6m6s
-tfjob-example-random-6d68b59ccd-fcn8f   0/1     Running   0          11s
-tfjob-example-random-6d68b59ccd-fcn8f   1/1     Running   0          13s
-tfjob-example-gr6st2jc-worker-0         0/2     Pending   0          0s
-tfjob-example-gr6st2jc-worker-0         0/2     Pending   0          0s
-tfjob-example-gr6st2jc-worker-0         0/2     ContainerCreating   0          1s
-tfjob-example-8n8xn9kx-worker-0         0/2     Pending             0          0s
-tfjob-example-8n8xn9kx-worker-0         0/2     Pending             0          0s
-tfjob-example-8n8xn9kx-worker-0         0/2     ContainerCreating   0          1s
-tfjob-example-snjtzpc9-worker-0         0/2     Pending             0          0s
-tfjob-example-snjtzpc9-worker-0         0/2     Pending             0          1s
-tfjob-example-snjtzpc9-worker-0         0/2     ContainerCreating   0          1s
-tfjob-example-gr6st2jc-worker-0         2/2     Running             0          4s
-tfjob-example-8n8xn9kx-worker-0         2/2     Running             0          6s
-tfjob-example-snjtzpc9-worker-0         2/2     Running             0          5s
+NAME                    TYPE      STATUS   AGE
+tfjob-random-5xq64qwz   Created   True     25s
+tfjob-random-h9l2h54d   Created   True     25s
+tfjob-random-pf5htw5f   Created   True     25s
 </details>
-<p>This step takes about 10-15 mins to complete. Your Vagrant VM will likely be very busy at this time.
-Please do not try to run multiple experiments on this simultaneously.</p>
-<p>Check the completion status of the <code>Experiment</code> <strong>tfjob-example</strong></p>
-<pre><code class="language-console">kubectl -n kubeflow get experiment tfjob-example -o json
+<p>TFJob trial creates a pod to run the trial.</p>
+<pre><code class="language-console">kubectl -n kubeflow get po -l controller-name=tf-operator
 </code></pre>
 <details>
 <summary>
  Sample Output
  </summary>
- {
-    "apiVersion": "kubeflow.org/v1alpha3",
-    "kind": "Experiment",
-    "metadata": {
-        "annotations": {
-            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kubeflow.org/v1alpha3\",\"kind\":\"Experiment\",\"metadata\":{\"annotations\":{},\"name\":\"tfjob-example\",\"namespace\":\"kubeflow\"},\"spec\":{\"algorithm\":{\"algorithmName\":\"random\"},\"maxFailedTrialCount\":3,\"maxTrialCount\":12,\"metricsCollectorSpec\":{\"collector\":{\"kind\":\"TensorFlowEvent\"},\"source\":{\"fileSystemPath\":{\"kind\":\"Directory\",\"path\":\"/train\"}}},\"objective\":{\"goal\":0.99,\"objectiveMetricName\":\"accuracy_1\",\"type\":\"maximize\"},\"parallelTrialCount\":3,\"parameters\":[{\"feasibleSpace\":{\"max\":\"0.05\",\"min\":\"0.01\"},\"name\":\"--learning_rate\",\"parameterType\":\"double\"},{\"feasibleSpace\":{\"max\":\"200\",\"min\":\"100\"},\"name\":\"--batch_size\",\"parameterType\":\"int\"}],\"trialTemplate\":{\"goTemplate\":{\"rawTemplate\":\"apiVersion: \\\"kubeflow.org/v1\\\"\\nkind: TFJob\\nmetadata:\\n  name: {{.Trial}}\\n  namespace: {{.NameSpace}}\\nspec:\\n tfReplicaSpecs:\\n  Worker:\\n    replicas: 1 \\n    restartPolicy: OnFailure\\n    template:\\n      spec:\\n        containers:\\n          - name: tensorflow \\n            image: gcr.io/kubeflow-ci/tf-mnist-with-summaries:1.0\\n            imagePullPolicy: IfNotPresent\\n            command:\\n              - \\\"python\\\"\\n              - \\\"/var/tf_mnist/mnist_with_summaries.py\\\"\\n              - \\\"--log_dir=/train/metrics\\\"\\n              {{- with .HyperParameters}}\\n              {{- range .}}\\n              - \\\"{{.Name}}={{.Value}}\\\"\\n              {{- end}}\\n              {{- end}}\"}}}}\n"
-        },
-        "creationTimestamp": "2019-10-20T07:03:52Z",
-        "finalizers": [
-            "update-prometheus-metrics"
-        ],
-        "generation": 2,
-        "name": "tfjob-example",
-        "namespace": "kubeflow",
-        "resourceVersion": "3763",
-        "selfLink": "/apis/kubeflow.org/v1alpha3/namespaces/kubeflow/experiments/tfjob-example",
-        "uid": "c5e3cdb3-f307-11e9-b489-080027c5bc64"
-    },
-    "spec": {
-        "algorithm": {
-            "algorithmName": "random",
-            "algorithmSettings": null
-        },
-        "maxFailedTrialCount": 3,
-        "maxTrialCount": 12,
-        "metricsCollectorSpec": {
-            "collector": {
-                "kind": "TensorFlowEvent"
-            },
-            "source": {
-                "fileSystemPath": {
-                    "kind": "Directory",
-                    "path": "/train"
-                }
-            }
-        },
-        "objective": {
-            "goal": 0.99,
-            "objectiveMetricName": "accuracy_1",
-            "type": "maximize"
-        },
-        "parallelTrialCount": 3,
-        "parameters": [
-            {
-                "feasibleSpace": {
-                    "max": "0.05",
-                    "min": "0.01"
-                },
-                "name": "--learning_rate",
-                "parameterType": "double"
-            },
-            {
-                "feasibleSpace": {
-                    "max": "200",
-                    "min": "100"
-                },
-                "name": "--batch_size",
-                "parameterType": "int"
-            }
-        ],
-        "trialTemplate": {
-            "goTemplate": {
-                "rawTemplate": "apiVersion: \"kubeflow.org/v1\"\nkind: TFJob\nmetadata:\n  name: {{.Trial}}\n  namespace: {{.NameSpace}}\nspec:\n tfReplicaSpecs:\n  Worker:\n    replicas: 1 \n    restartPolicy: OnFailure\n    template:\n      spec:\n        containers:\n          - name: tensorflow \n            image: gcr.io/kubeflow-ci/tf-mnist-with-summaries:1.0\n            imagePullPolicy: IfNotPresent\n            command:\n              - \"python\"\n              - \"/var/tf_mnist/mnist_with_summaries.py\"\n              - \"--log_dir=/train/metrics\"\n              {{- with .HyperParameters}}\n              {{- range .}}\n              - \"{{.Name}}={{.Value}}\"\n              {{- end}}\n              {{- end}}"
-            }
-        }
-    },
-    "status": {
-        "completionTime": "2019-10-20T07:12:19Z",
-        "conditions": [
-            {
-                "lastTransitionTime": "2019-10-20T07:03:52Z",
-                "lastUpdateTime": "2019-10-20T07:03:52Z",
-                "message": "Experiment is created",
-                "reason": "ExperimentCreated",
-                "status": "True",
-                "type": "Created"
-            },
-            {
-                "lastTransitionTime": "2019-10-20T07:12:19Z",
-                "lastUpdateTime": "2019-10-20T07:12:19Z",
-                "message": "Experiment is running",
-                "reason": "ExperimentRunning",
-                "status": "False",
-                "type": "Running"
-            },
-            {
-                "lastTransitionTime": "2019-10-20T07:12:19Z",
-                "lastUpdateTime": "2019-10-20T07:12:19Z",
-                "message": "Experiment has succeeded because max trial count has reached",
-                "reason": "ExperimentSucceeded",
-                "status": "True",
-                "type": "Succeeded"
-            }
-        ],
-        "currentOptimalTrial": {
-            "observation": {
-                "metrics": [
-                    {
-                        "name": "accuracy_1",
-                        "value": 0.965399980545
-                    }
-                ]
-            },
-            "parameterAssignments": [
-                {
-                    "name": "--learning_rate",
-                    "value": "0.01994432506474382"
-                },
-                {
-                    "name": "--batch_size",
-                    "value": "182"
-                }
-            ]
-        },
-        "startTime": "2019-10-20T07:03:52Z",
-        "trials": 12,
-        "trialsSucceeded": 12
+NAME                             READY   STATUS    RESTARTS   AGE
+tfjob-random-484zhpzq-worker-0   2/2     Running   0          39s
+tfjob-random-wqglhpqj-worker-0   2/2     Running   0          40s
+tfjob-random-zb89h929-worker-0   2/2     Running   0          41s
+</details>
+<h3><a class="header" href="#metric-collection" id="metric-collection">Metric Collection</a></h3>
+<p>When we talked about the Kubernetes architecture we briefly mentioned how a user creates resources using the Kubernetes API server and how the Kubernetes API server stores this data in etcd.</p>
+<p><img src="katib/../images/kubeapi-etcd.png" alt="kubeapi-etcd" /></p>
+<p>In reality, there are several stages between the Kubernetes API server receiving a request before it is accepted.
+In particular, there are two common extension points where external controllers can do additional tasks. These are mutating admission controllers and validating admission controllers.
+Katib controller registers itself as both a mutating and validating controller.</p>
+<p><img src="katib/../images/katib-webhook.png" alt="katib-webhook" /></p>
+<p>You can see the webhooks as follows.</p>
+<pre><code class="language-console">kubectl get MutatingWebhookConfiguration
+</code></pre>
+<details>
+<summary>
+ Sample Output
+ </summary>
+NAME                            CREATED AT
+katib-mutating-webhook-config   2019-10-26T21:00:30Z
+</details>
+<pre><code class="language-console">kubectl get ValidatingWebhookConfiguration
+</code></pre>
+<details>
+<summary>
+ Sample Output
+ </summary>
+NAME                              CREATED AT
+katib-validating-webhook-config   2019-10-26T21:00:30Z
+</details>
+<p>The mutating webhook looks at Katib configuration and injects a side car container to the <code>Trial</code> jobs/pods. You can see the configurations as follows.</p>
+<pre><code class="language-console">kubectl -n kubeflow get cm katib-config -o yaml
+</code></pre>
+<details>
+<summary>
+ Sample Output
+ </summary>
+ apiVersion: v1
+data:
+  metrics-collector-sidecar: |-
+    {
+      "StdOut": {
+              "image": "gcr.io/kubeflow-images-public/katib/v1alpha3/file-metrics-collector:v0.7.0"
+      },
+      "File": {
+              "image": "gcr.io/kubeflow-images-public/katib/v1alpha3/file-metrics-collector:v0.7.0"
+      },
+      "TensorFlowEvent": {
+              "image": "gcr.io/kubeflow-images-public/katib/v1alpha3/tfevent-metrics-collector:v0.7.0"
+      }
     }
-}
+  suggestion: |-
+    {
+      "random": {
+              "image": "gcr.io/kubeflow-images-public/katib/v1alpha3/suggestion-hyperopt:v0.7.0"
+      },
+      "grid": {
+              "image": "gcr.io/kubeflow-images-public/katib/v1alpha3/suggestion-chocolate:v0.7.0"
+      },
+      "hyperband": {
+              "image": "gcr.io/kubeflow-images-public/katib/v1alpha3/suggestion-hyperband:v0.7.0"
+      },
+      "bayesianoptimization": {
+              "image": "gcr.io/kubeflow-images-public/katib/v1alpha3/suggestion-skopt:v0.7.0"
+      },
+      "tpe": {
+              "image": "gcr.io/kubeflow-images-public/katib/v1alpha3/suggestion-hyperopt:v0.7.0"
+      },
+      "nasrl": {
+              "image": "gcr.io/kubeflow-images-public/katib/v1alpha3/suggestion-nasrl:v0.7.0"
+      }
+    }
+kind: ConfigMap
  </details>
+<h3><a class="header" href="#experiment-completion" id="experiment-completion">Experiment Completion</a></h3>
+<p>Once the Trials created by Katib are complete, the Experiment enters a completed state.
+Check the completion status of the <code>Experiment</code> <strong>tfjob-example</strong></p>
+<pre><code class="language-console">kubectl -n kubeflow get experiment tfjob-random -o json
+</code></pre>
+<details>
+<summary>
+ Sample Output
+ </summary>
+</details>
 <p>You can observe the status of this experiment under the <code>status</code> field of the output.</p>
 <p>You can also see that Katib has cleaned up the <code>Trial</code> worker pods.</p>
 <pre><code class="language-console">kubectl -n kubeflow get pods
@@ -800,13 +1051,30 @@ katib-ui-854969c97-tl4wg                1/1     Running   0          21m
 pytorch-operator-794899d49b-ww59g       1/1     Running   0          21m
 tf-job-operator-7b589f5f5f-fpr2p        1/1     Running   0          21m
 tfjob-example-random-6d68b59ccd-fcn8f   1/1     Running   0          15m
-</details><h1><a class="header" href="#random-search" id="random-search">Random Search</a></h1>
+</details>
+<p>This <code>Experiment</code> used a <code>random</code> algorithm to find the optimal hyperparameter.
+<img src="katib/../images/random.png" alt="katib-webhook" /></p>
+<h1><a class="header" href="#grid-search" id="grid-search">Grid Search</a></h1>
+<h1><a class="header" href="#bayesian-optimization" id="bayesian-optimization">Bayesian Optimization</a></h1>
 <h1><a class="header" href="#neural-architecture-search-1" id="neural-architecture-search-1">Neural Architecture Search</a></h1>
 <h1><a class="header" href="#automatic-machine-learning" id="automatic-machine-learning">Automatic Machine Learning</a></h1>
 <p>Applied Machine Learning is a highly iterative process. When you are training a neural netwok you have to make a lot of choices - like how many layers does the network have, how many hidden units should have, what is the learning rate, what is the activation function etc. It is almost impossible to correctly guess the correct values all these hyperparameters. Intuitions from one domain do not apply well to another domain. 
 When training a machine learning model, we want to optimize the in-sample error (Bias) and the out-of-sample error(variance). In the past we often saw that improving the bias resulted in over-fitting and high variance and vice versa.
 With the rise of neural networks and big data, improving bias and variance together has become feasible. We can build larger neural networks to reduce bias and train them with more data to reduce variance. How ever this exacerbates the problem of selecting optimal hyperparameters and neural network architectures. This make automaitc machine learning more desirable, but also feasible as we do not have to deal with the bias/variance trade off.</p>
-<p>$HOME/tfworld/setup</p>
+<h1><a class="header" href="#kubeflow" id="kubeflow">Kubeflow</a></h1>
+<h1><a class="header" href="#architecture" id="architecture">Architecture</a></h1>
+<h1><a class="header" href="#jupyter-notebook" id="jupyter-notebook">Jupyter Notebook</a></h1>
+<h1><a class="header" href="#cleanup" id="cleanup">Cleanup</a></h1>
+<p>Deleting the vagrant VM</p>
+<p>Go to the folder where you ran git clone in <a href="cleanup/../prereqs/download.html">Step 1.3</a>.</p>
+<pre><code class="language-console">vagrant destroy
+</code></pre>
+<p>Get the list of Virtual Box VMs</p>
+<pre><code class="language-console">vboxmanage list vms
+</code></pre>
+<p>Delete any unused VMs.</p>
+<pre><code class="language-console">vboxmanage unregistervm &lt;vmid from the previous step&gt; --delete
+</code></pre>
 <h1><a class="header" href="#references" id="references">References</a></h1>
 
                     </main>
