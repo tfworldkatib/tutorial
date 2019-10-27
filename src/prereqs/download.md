@@ -114,3 +114,6 @@ Bringing machine 'default' up with 'virtualbox' provider...
     default: clusterrolebinding.rbac.authorization.k8s.io/kube-router created
     default: persistentvolume/data-kf-nfs-server-provisioner-0 created
 </details>
+
+`vagrant up` downloads the Virtual Box image for this tutorial and powers it on.
+This may take 15-20 minutes and at the end of it you will have a single node Kubernetes cluster.

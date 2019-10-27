@@ -14,6 +14,7 @@ cd $HOME/tutorial/setup/katib-install
 <summary>
  Sample Output
  </summary>
+ ```
  + kubectl apply -f v1alpha3
 namespace/kubeflow created
 + kubectl apply -f v1alpha3/katib-controller
@@ -65,6 +66,7 @@ clusterrole.rbac.authorization.k8s.io/pytorch-operator created
 clusterrolebinding.rbac.authorization.k8s.io/pytorch-operator created
 service/pytorch-operator created
 deployment.apps/pytorch-operator created
+```
  </details>
 
 Check that the Katib core components are installed and ready.
@@ -77,6 +79,7 @@ Check that the Katib core components are installed and ready.
  Sample Output
  </summary>
  
+```
 NAME                                READY   STATUS    RESTARTS   AGE
 katib-controller-7665868558-nfghw   1/1     Running   1          80s
 katib-db-594756f779-dxttq           1/1     Running   0          81s
@@ -84,9 +87,10 @@ katib-manager-769b7bcbfb-7vvgx      1/1     Running   0          81s
 katib-ui-854969c97-tl4wg            1/1     Running   0          79s
 pytorch-operator-794899d49b-ww59g   1/1     Running   0          79s
 tf-job-operator-7b589f5f5f-fpr2p    1/1     Running   0          80s
+```
 </details>
 
-katib-controller, katib-manager, katib-db and katib-ui are the core components of Katib.
-We have also installed a tf-job-operator and pytorch-operator to be able to run TensorFlow Jobs and PyTorch Jobs.
+`katib-controller`, `katib-manager`, `katib-db` and `katib-ui` are the core components of Katib.
+We have also installed a `tf-job-operator` and `pytorch-operator` to be able to run TensorFlow Jobs and PyTorch Jobs.
 
-TODO: Add Katib diagram here.
+You can access Katib UI [here](http://localhost:31230/katib/). If you are running on a non-Vagrant Kubernetes Cluster, you may need to use the Node IP for your VM or change the katib-ui service to use a LoadBalancer.
