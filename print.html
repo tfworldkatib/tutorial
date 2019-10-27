@@ -636,7 +636,7 @@ We have also installed a <code>tf-job-operator</code> and <code>pytorch-operator
 <p><em>This step takes about 10-15 mins to complete. Your Vagrant VM will likely be very busy at this time.
 Please do not try to run multiple experiments on this simultaneously.</em></p>
 <hr />
-<p>Katib has an extensible architecture for <code>Suggestion</code> algorithms. Today we will look at four of the in-built models.</p>
+<p>Katib has an extensible architecture for <code>Suggestion</code> algorithms. Today we will look at some of the in-built models.</p>
 <p>Let us start with the <code>random</code> algorithm using a TensorFlow Job example.</p>
 <h1><a class="header" href="#random-search" id="random-search">Random Search</a></h1>
 <p>Random search is a black box algorithm for searching for an optimal hyperparameter vector.
@@ -1330,7 +1330,7 @@ status:
 </code></pre>
 </details>
 <h1><a class="header" href="#bayesian-optimization" id="bayesian-optimization">Bayesian Optimization</a></h1>
-<p>Model training is an extensive process and each time we want to evaluate a hyperparameter vector, we have to run this process.
+<p>Model training is an expensive process and each time we want to evaluate a hyperparameter vector, we have to run this process.
 This makes grid search very expensive as it is exponential in the number of hyperparameters. Random search may also need many iterations to get to a good hyperparameter vector as it is randomly trying out different options.
 Before automatic hyperparameter tuning was wide spread, the common mechanism for finding a good set of hyperparameters was to use <code>Grad Student Descent</code> or <code>Intern Descent</code>. Human reasoning often follows a bayesian model, where we try out something and then iteratively pick what we think is a <code>good</code> next set of values to try. Systems in the real world often fit a probability distribution, like a normal distribution. Bayesian optimization models the hyperparameter vector performance as a distribution, often a Gaussian process. We then try to optimize the performance of this function. We also naturally make the trade off between exploration and exploitation. If the term paper is due tomorrow or if there is a release deadline, we may choose to optimize amongst the known best performing values. If we have a few months to try out different options, we may choose to try out a wider range of values.</p>
 <p>Bayesian optimization follows a similar pattern with user configurable parameters to control the amount of exploration vs exploitation. Let us see how this works starting with an example based on the <a href="https://github.com/fmfn/BayesianOptimization">bayes_opt</a> package.</p>
