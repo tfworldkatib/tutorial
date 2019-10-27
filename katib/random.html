@@ -146,8 +146,82 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#random-search" id="random-search">Random Search</a></h1>
+<p>Random search is a black box algorithm for searching for an optimal hyperparameter vector.
+It assumes nothing about the model and each trial can be run parallellty.</p>
+<p>Random search selects points at random from the entire search space. </p>
+<p><img src="../images/random.png" alt="Random" /></p>
+<p>Random search provides a good coverage for multiple hyperparameters in the search space.
+If you want a generic baseline, it is always a good idea to start with a Random search.</p>
+<p>Now let us create a random search experiment using Katib.</p>
 <h3><a class="header" href="#experiment" id="experiment">Experiment</a></h3>
 <p>Let us start by creating an experiment.</p>
+<details>
+<summary>
+Random search experiment
+</summary>
+<pre><code class="language-yaml">apiVersion: &quot;kubeflow.org/v1alpha3&quot;
+kind: Experiment
+metadata:
+  namespace: kubeflow
+  name: tfjob-random
+spec:
+  parallelTrialCount: 3
+  maxTrialCount: 12
+  maxFailedTrialCount: 3
+  objective:
+    type: maximize
+    goal: 0.99
+    objectiveMetricName: accuracy_1
+  algorithm:
+    algorithmName: random
+  metricsCollectorSpec:
+    source:
+      fileSystemPath:
+        path: /train
+        kind: Directory
+    collector:
+      kind: TensorFlowEvent
+  parameters:
+    - name: --learning_rate
+      parameterType: double
+      feasibleSpace:
+        min: &quot;0.01&quot;
+        max: &quot;0.05&quot;
+    - name: --batch_size
+      parameterType: int
+      feasibleSpace:
+        min: &quot;100&quot;
+        max: &quot;200&quot;
+  trialTemplate:
+    goTemplate:
+        rawTemplate: |-
+          apiVersion: &quot;kubeflow.org/v1&quot;
+          kind: TFJob
+          metadata:
+            name: {{.Trial}}
+            namespace: {{.NameSpace}}
+          spec:
+           tfReplicaSpecs:
+            Worker:
+              replicas: 1
+              restartPolicy: OnFailure
+              template:
+                spec:
+                  containers:
+                    - name: tensorflow
+                      image: gcr.io/kubeflow-ci/tf-mnist-with-summaries:1.0
+                      imagePullPolicy: IfNotPresent
+                      command:
+                        - &quot;python&quot;
+                        - &quot;/var/tf_mnist/mnist_with_summaries.py&quot;
+                        - &quot;--log_dir=/train/metrics&quot;
+                        {{- with .HyperParameters}}
+                        {{- range .}}
+                        - &quot;{{.Name}}={{.Value}}&quot;
+                        {{- end}}
+                        {{- end}}
+</code></pre>
+</details>
 <p><img src="../images/experiment.png" alt="Experiment" /></p>
 <pre><code class="language-console">cd $HOME/tutorial/examples/v1alpha3
 kubectl apply -f tfjob-random.yaml
@@ -559,8 +633,6 @@ pytorch-operator-794899d49b-ww59g       1/1     Running   0          21m
 tf-job-operator-7b589f5f5f-fpr2p        1/1     Running   0          21m
 tfjob-example-random-6d68b59ccd-fcn8f   1/1     Running   0          15m
 </details>
-<p>This <code>Experiment</code> used a <code>random</code> algorithm to find the optimal hyperparameter.
-<img src="../images/random.png" alt="katib-webhook" /></p>
 
                     </main>
 
