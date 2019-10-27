@@ -2,7 +2,7 @@ apiVersion: "kubeflow.org/v1alpha3"
 kind: Experiment
 metadata:
   namespace: kubeflow
-  name: tfjob-example
+  name: tfjob-bayesian
 spec:
   parallelTrialCount: 3
   maxTrialCount: 12
@@ -12,7 +12,7 @@ spec:
     goal: 0.99
     objectiveMetricName: accuracy_1
   algorithm:
-    algorithmName: random
+    algorithmName: bayesianoptimization
   metricsCollectorSpec:
     source:
       fileSystemPath:
