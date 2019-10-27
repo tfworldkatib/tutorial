@@ -147,12 +147,12 @@
                     <main>
                         <h1><a class="header" href="#grid-search" id="grid-search">Grid Search</a></h1>
 <p>Grid search is also a black box algorithm similar to Random search. 
-It assumes nothing about the model and each trial can be run parallellty.</p>
+It assumes nothing about the model and each trial can be run in parallel.</p>
 <p>Grid search does an exhaustive search over the entire search space. 
 Ideally you want the search to be uniform across your entire search space. 
 The following picture shows an example search with step size 10 for the batch size.</p>
 <p><img src="../images/grid.png" alt="Grid" /></p>
-<p>However depending on the search space and the parameters you chose, the grid algorithm may end up not covering a lot of ground in one hyperparameter space. For example for the same exaple above, if you choose a step size of 3 instead of 10, you get the following coverage in 30 iterations.</p>
+<p>However depending on the search space and the parameters you chose, the grid algorithm may end up not covering a lot of ground in one hyperparameter space. For example for the same example above, if you choose a step size of 3 instead of 10, you get the following coverage in 30 iterations.</p>
 <p><img src="../images/grid-bad.png" alt="Grid" /></p>
 <p>So if you want a generic baseline, it is always a good idea to start with a Random search.</p>
 <p>Now let us create a grid search experiment using Katib.</p>

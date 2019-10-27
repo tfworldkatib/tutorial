@@ -266,7 +266,7 @@ csinodes                                       storage.k8s.io                 fa
 storageclasses                    sc           storage.k8s.io                 false        StorageClass
 volumeattachments                              storage.k8s.io                 false        VolumeAttachment
 </details>
-<p>Kubernetes supports <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/extend-cluster/">various</a> types of extension capabilites at all layers, starting with the API server, scheduler, controllers all the way to the kubelet. One of the common patterns used to add new resources and capabilities to the Kubernetes API server is called the Operator Pattern. This consists of creating a custom resource(<code>Kind</code>) and a controller that manages this custom resource.
+<p>Kubernetes supports <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/extend-cluster/">various</a> types of extension capabilities at all layers, starting with the API server, scheduler, controllers all the way to the kubelet. One of the common patterns used to add new resources and capabilities to the Kubernetes API server is called the Operator Pattern. This consists of creating a custom resource(<code>Kind</code>) and a controller that manages this custom resource.
 Kubeflow and Katib use this extensively. This allows Kubeflow and Katib to be integrated with Kubernetes. You can manage and interact with Kubeflow and Katib components just as you interact with any other Kubernetes component!</p>
 <p><img src="../images/operator.png" alt="Kubernetes Extensibility" /></p>
 <p>You can see the available Kubernetes custom resource definitions as follows.</p>

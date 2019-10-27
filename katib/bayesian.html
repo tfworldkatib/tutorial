@@ -148,15 +148,15 @@
                         <h1><a class="header" href="#bayesian-optimization" id="bayesian-optimization">Bayesian Optimization</a></h1>
 <p>Model training is an extensive process and each time we want to evaluate a hyperparameter vector, we have to run this process.
 This makes grid search very expensive as it is exponential in the number of hyperparameters. Random search may also need many iterations to get to a good hyperparameter vector as it is randomly trying out different options.
-Before automatic hyperparameter tuning was wide spread, the common mechanism for finding a good set of Hyperparamters was to use <code>Grad Student Descent</code> or <code>Intern Descent</code>. Human reasoning often follows a bayesian model, where we try out something and then iteratively pick what we think is a <code>good</code> next set of values to try. Systems in the real world often fit a probability distribution, like a normal distribution. Bayesian optimization models the hyperparameter vector performance as a distribution, often a Gaussian process. We then try to optimize the performance of this function. We also naturally make the trade off between exploration and exploitation. If the term paper is due tomorrow or if there is a release deadline, we may choose to optimze amongst the known best performing values. If we have a few months to try out different options, we may choose to try out a wider range of values.</p>
+Before automatic hyperparameter tuning was wide spread, the common mechanism for finding a good set of hyperparameters was to use <code>Grad Student Descent</code> or <code>Intern Descent</code>. Human reasoning often follows a bayesian model, where we try out something and then iteratively pick what we think is a <code>good</code> next set of values to try. Systems in the real world often fit a probability distribution, like a normal distribution. Bayesian optimization models the hyperparameter vector performance as a distribution, often a Gaussian process. We then try to optimize the performance of this function. We also naturally make the trade off between exploration and exploitation. If the term paper is due tomorrow or if there is a release deadline, we may choose to optimize amongst the known best performing values. If we have a few months to try out different options, we may choose to try out a wider range of values.</p>
 <p>Bayesian optimization follows a similar pattern with user configurable parameters to control the amount of exploration vs exploitation. Let us see how this works starting with an example based on the <a href="https://github.com/fmfn/BayesianOptimization">bayes_opt</a> package.</p>
-<p>Let us assume that the unknown Hyperparameter performance function for our Hyperparameter of interest is as follows.
+<p>Let us assume that the unknown hyperparameter performance function for our hyperparameter of interest is as follows.
 <img src="../images/target.png" alt="Target" /></p>
 <p>Initially we don't know anything about this function, so let us pick one hyperparameter vector at random and run the model training to evaluate the hyperparameter vector performance.</p>
 <p><img src="../images/run1.png" alt="Target" /></p>
-<p>We can use expected improvement(EI) or Upper Confidence Bound(UCB) as the acqusition or utility function and pick a value that will optimize this. In this example we choose UCB as the utility function. UCB provides a way to configure the amount of exploration we want to allow. We choose the optimal value per the utility function and sample this value.</p>
+<p>We can use expected improvement(EI) or Upper Confidence Bound(UCB) as the acquisition or utility function and pick a value that will optimize this. In this example we choose UCB as the utility function. UCB provides a way to configure the amount of exploration we want to allow. We choose the optimal value per the utility function and sample this value.</p>
 <p><img src="../images/run2.png" alt="Target" /></p>
-<p>We repeat this process until we've reach the desired accuracy or we've exhaused out budget.</p>
+<p>We repeat this process until we've reach the desired accuracy or we've exhausted our budget.</p>
 <p><img src="../images/run3.png" alt="Target" /></p>
 <p>We can get to a globally optimal value pretty quickly</p>
 <p><img src="../images/run9.png" alt="Target" /></p>
@@ -234,7 +234,7 @@ spec:
 
 </code></pre>
 </details>
-<p>The only difference betweebn random search and bayesian optimization specifications is the algorithm name <code>algorithmName: bayesianoptimization</code>. This is the primary advantage of using Katib. We can easily try different optimizations as they are added to Katib, without having to know too much about their implementation.</p>
+<p>The only difference between random search and bayesian optimization specifications is the algorithm name <code>algorithmName: bayesianoptimization</code>. This is the primary advantage of using Katib. We can easily try different optimizations as they are added to Katib, without having to know too much about their implementation.</p>
 <p>Let us create the experiment.</p>
 <pre><code class="language-console">cd $HOME/tutorial/examples/v1alpha3
 kubectl apply -f tfjob-bayesian.yaml

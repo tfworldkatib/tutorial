@@ -520,7 +520,7 @@ csinodes                                       storage.k8s.io                 fa
 storageclasses                    sc           storage.k8s.io                 false        StorageClass
 volumeattachments                              storage.k8s.io                 false        VolumeAttachment
 </details>
-<p>Kubernetes supports <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/extend-cluster/">various</a> types of extension capabilites at all layers, starting with the API server, scheduler, controllers all the way to the kubelet. One of the common patterns used to add new resources and capabilities to the Kubernetes API server is called the Operator Pattern. This consists of creating a custom resource(<code>Kind</code>) and a controller that manages this custom resource.
+<p>Kubernetes supports <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/extend-cluster/">various</a> types of extension capabilities at all layers, starting with the API server, scheduler, controllers all the way to the kubelet. One of the common patterns used to add new resources and capabilities to the Kubernetes API server is called the Operator Pattern. This consists of creating a custom resource(<code>Kind</code>) and a controller that manages this custom resource.
 Kubeflow and Katib use this extensively. This allows Kubeflow and Katib to be integrated with Kubernetes. You can manage and interact with Kubeflow and Katib components just as you interact with any other Kubernetes component!</p>
 <p><img src="kubernetes/../images/operator.png" alt="Kubernetes Extensibility" /></p>
 <p>You can see the available Kubernetes custom resource definitions as follows.</p>
@@ -539,8 +539,9 @@ trials.kubeflow.org        2019-10-26T21:00:25Z
 </details><h1><a class="header" href="#katib" id="katib">Katib</a></h1>
 <p>Katib is a scalable and extensible <code>Automatic Machine Learning</code>(AutoML) framework on Kubernetes. It supports Hyperparameter tuning and neural architecture search. It enables users to discover models that are as good as hand-crafted models, without having to go through the laborious process of manual configuration and iteration.</p>
 <p>Katib organizes an optimization or neural architecture search as an <code>Experiment</code>. 
-AutoML algorithms run in an interative manner. An <code>Experiment</code> defines the search space, metrics target and maximum number of iterations. Katib searches iteratively in the search space to meet the metrics target or for the maximum number of iterations.
+AutoML algorithms run in an interactive manner. An <code>Experiment</code> defines the search space, metrics target and maximum number of iterations. Katib searches iteratively in the search space to meet the metrics target or for the maximum number of iterations.
 Katib supports two different mechanisms for AutoML - Hyperparameter Tuning and Neural Architecture Search.</p>
+<p><img src="katib/../images/automl.png" alt="AutoML" /></p>
 <h2><a class="header" href="#etymology" id="etymology">Etymology</a></h2>
 <p>Katib stands for <code>secretary</code> in Arabic. As <code>Vizier</code> stands for a high official or a prime minister in Arabic, this project Katib is named in the honor of <a href="https://ai.google/research/pubs/pub46180">Vizier</a>.</p>
 <h2><a class="header" href="#hyperparameter-tuning" id="hyperparameter-tuning">Hyperparameter Tuning</a></h2>
@@ -628,8 +629,8 @@ katib-ui-854969c97-tl4wg            1/1     Running   0          79s
 pytorch-operator-794899d49b-ww59g   1/1     Running   0          79s
 tf-job-operator-7b589f5f5f-fpr2p    1/1     Running   0          80s</p>
 </details>
-<p>katib-controller, katib-manager, katib-db and katib-ui are the core components of Katib.
-We have also installed a tf-job-operator and pytorch-operator to be able to run TensorFlow Jobs and PyTorch Jobs.</p>
+<p><code>katib-controller</code>, <code>katib-manager</code>, <code>katib-db</code> and <code>katib-ui</code> are the core components of Katib.
+We have also installed a <code>tf-job-operator</code> and <code>pytorch-operator</code> to be able to run TensorFlow Jobs and PyTorch Jobs.</p>
 <h1><a class="header" href="#hyperparameter-tuning-1" id="hyperparameter-tuning-1">Hyperparameter Tuning</a></h1>
 <hr />
 <p><em>This step takes about 10-15 mins to complete. Your Vagrant VM will likely be very busy at this time.
@@ -1127,12 +1128,12 @@ tfjob-example-random-6d68b59ccd-fcn8f   1/1     Running   0          15m
 </details>
 <h1><a class="header" href="#grid-search" id="grid-search">Grid Search</a></h1>
 <p>Grid search is also a black box algorithm similar to Random search. 
-It assumes nothing about the model and each trial can be run parallellty.</p>
+It assumes nothing about the model and each trial can be run in parallel.</p>
 <p>Grid search does an exhaustive search over the entire search space. 
 Ideally you want the search to be uniform across your entire search space. 
 The following picture shows an example search with step size 10 for the batch size.</p>
 <p><img src="katib/../images/grid.png" alt="Grid" /></p>
-<p>However depending on the search space and the parameters you chose, the grid algorithm may end up not covering a lot of ground in one hyperparameter space. For example for the same exaple above, if you choose a step size of 3 instead of 10, you get the following coverage in 30 iterations.</p>
+<p>However depending on the search space and the parameters you chose, the grid algorithm may end up not covering a lot of ground in one hyperparameter space. For example for the same example above, if you choose a step size of 3 instead of 10, you get the following coverage in 30 iterations.</p>
 <p><img src="katib/../images/grid-bad.png" alt="Grid" /></p>
 <p>So if you want a generic baseline, it is always a good idea to start with a Random search.</p>
 <p>Now let us create a grid search experiment using Katib.</p>
@@ -1331,15 +1332,15 @@ status:
 <h1><a class="header" href="#bayesian-optimization" id="bayesian-optimization">Bayesian Optimization</a></h1>
 <p>Model training is an extensive process and each time we want to evaluate a hyperparameter vector, we have to run this process.
 This makes grid search very expensive as it is exponential in the number of hyperparameters. Random search may also need many iterations to get to a good hyperparameter vector as it is randomly trying out different options.
-Before automatic hyperparameter tuning was wide spread, the common mechanism for finding a good set of Hyperparamters was to use <code>Grad Student Descent</code> or <code>Intern Descent</code>. Human reasoning often follows a bayesian model, where we try out something and then iteratively pick what we think is a <code>good</code> next set of values to try. Systems in the real world often fit a probability distribution, like a normal distribution. Bayesian optimization models the hyperparameter vector performance as a distribution, often a Gaussian process. We then try to optimize the performance of this function. We also naturally make the trade off between exploration and exploitation. If the term paper is due tomorrow or if there is a release deadline, we may choose to optimze amongst the known best performing values. If we have a few months to try out different options, we may choose to try out a wider range of values.</p>
+Before automatic hyperparameter tuning was wide spread, the common mechanism for finding a good set of hyperparameters was to use <code>Grad Student Descent</code> or <code>Intern Descent</code>. Human reasoning often follows a bayesian model, where we try out something and then iteratively pick what we think is a <code>good</code> next set of values to try. Systems in the real world often fit a probability distribution, like a normal distribution. Bayesian optimization models the hyperparameter vector performance as a distribution, often a Gaussian process. We then try to optimize the performance of this function. We also naturally make the trade off between exploration and exploitation. If the term paper is due tomorrow or if there is a release deadline, we may choose to optimize amongst the known best performing values. If we have a few months to try out different options, we may choose to try out a wider range of values.</p>
 <p>Bayesian optimization follows a similar pattern with user configurable parameters to control the amount of exploration vs exploitation. Let us see how this works starting with an example based on the <a href="https://github.com/fmfn/BayesianOptimization">bayes_opt</a> package.</p>
-<p>Let us assume that the unknown Hyperparameter performance function for our Hyperparameter of interest is as follows.
+<p>Let us assume that the unknown hyperparameter performance function for our hyperparameter of interest is as follows.
 <img src="katib/../images/target.png" alt="Target" /></p>
 <p>Initially we don't know anything about this function, so let us pick one hyperparameter vector at random and run the model training to evaluate the hyperparameter vector performance.</p>
 <p><img src="katib/../images/run1.png" alt="Target" /></p>
-<p>We can use expected improvement(EI) or Upper Confidence Bound(UCB) as the acqusition or utility function and pick a value that will optimize this. In this example we choose UCB as the utility function. UCB provides a way to configure the amount of exploration we want to allow. We choose the optimal value per the utility function and sample this value.</p>
+<p>We can use expected improvement(EI) or Upper Confidence Bound(UCB) as the acquisition or utility function and pick a value that will optimize this. In this example we choose UCB as the utility function. UCB provides a way to configure the amount of exploration we want to allow. We choose the optimal value per the utility function and sample this value.</p>
 <p><img src="katib/../images/run2.png" alt="Target" /></p>
-<p>We repeat this process until we've reach the desired accuracy or we've exhaused out budget.</p>
+<p>We repeat this process until we've reach the desired accuracy or we've exhausted our budget.</p>
 <p><img src="katib/../images/run3.png" alt="Target" /></p>
 <p>We can get to a globally optimal value pretty quickly</p>
 <p><img src="katib/../images/run9.png" alt="Target" /></p>
@@ -1417,7 +1418,7 @@ spec:
 
 </code></pre>
 </details>
-<p>The only difference betweebn random search and bayesian optimization specifications is the algorithm name <code>algorithmName: bayesianoptimization</code>. This is the primary advantage of using Katib. We can easily try different optimizations as they are added to Katib, without having to know too much about their implementation.</p>
+<p>The only difference between random search and bayesian optimization specifications is the algorithm name <code>algorithmName: bayesianoptimization</code>. This is the primary advantage of using Katib. We can easily try different optimizations as they are added to Katib, without having to know too much about their implementation.</p>
 <p>Let us create the experiment.</p>
 <pre><code class="language-console">cd $HOME/tutorial/examples/v1alpha3
 kubectl apply -f tfjob-bayesian.yaml
@@ -1633,9 +1634,9 @@ status:
 </code></pre>
 <details><h1><a class="header" href="#neural-architecture-search-1" id="neural-architecture-search-1">Neural Architecture Search</a></h1>
 <h1><a class="header" href="#automatic-machine-learning" id="automatic-machine-learning">Automatic Machine Learning</a></h1>
-<p>Applied Machine Learning is a highly iterative process. When you are training a neural netwok you have to make a lot of choices - like how many layers does the network have, how many hidden units should have, what is the learning rate, what is the activation function etc. It is almost impossible to correctly guess the correct values all these hyperparameters. Intuitions from one domain do not apply well to another domain. 
+<p>Applied Machine Learning is a highly iterative process. When you are training a neural network you have to make a lot of choices - like how many layers does the network have, how many hidden units should have, what is the learning rate, what is the activation function etc. It is almost impossible to correctly guess the correct values all these hyperparameters. Intuitions from one domain do not apply well to another domain.
 When training a machine learning model, we want to optimize the in-sample error (Bias) and the out-of-sample error(variance). In the past we often saw that improving the bias resulted in over-fitting and high variance and vice versa.
-With the rise of neural networks and big data, improving bias and variance together has become feasible. We can build larger neural networks to reduce bias and train them with more data to reduce variance. How ever this exacerbates the problem of selecting optimal hyperparameters and neural network architectures. This make automaitc machine learning more desirable, but also feasible as we do not have to deal with the bias/variance trade off.</p>
+With the rise of neural networks and big data, improving bias and variance together has become feasible. We can build larger neural networks to reduce bias and train them with more data to reduce variance. How ever this exacerbates the problem of selecting optimal hyperparameters and neural network architectures. This make automatic machine learning more desirable, but also feasible as we do not have to deal with the bias/variance trade off.</p>
 <h1><a class="header" href="#kubeflow" id="kubeflow">Kubeflow</a></h1>
 <h1><a class="header" href="#architecture" id="architecture">Architecture</a></h1>
 <h1><a class="header" href="#jupyter-notebook" id="jupyter-notebook">Jupyter Notebook</a></h1>
