@@ -7,9 +7,10 @@ metadata:
     app: katib
     component: ui
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - port: 80
+      nodePort: 31230
       protocol: TCP
       name: ui
   selector:

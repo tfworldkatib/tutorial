@@ -32,7 +32,7 @@ spec:
       feasibleSpace:
         min: "100"
         max: "200"
-        step: "20"
+        step: "1"
   trialTemplate:
     goTemplate:
         rawTemplate: |-
