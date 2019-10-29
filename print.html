@@ -1104,12 +1104,24 @@ Each <code>Trial</code> evaluates the performance for the suggested hyperparamet
 <summary>
  Sample Output
  </summary>
-NAME                    TYPE      STATUS   AGE
+<p>NAME                    TYPE      STATUS   AGE
 tfjob-random-5xq64qwz   Created   True     25s
 tfjob-random-h9l2h54d   Created   True     25s
-tfjob-random-pf5htw5f   Created   True     25s
+tfjob-random-pf5htw5f   Created   True     25s</p>
 </details>
-<p>TFJob trial creates a pod to run the trial.</p>
+<p>Each trial starts a <code>TFJob</code> resource. </p>
+<pre><code class="language-console">kubectl -n kubeflow get tfjobs
+</code></pre>
+<details>
+<summary>
+ Sample Output
+ </summary>
+<p>NAME                    TYPE      STATUS   AGE
+tfjob-random-5xq64qwz   Created   True     25s
+tfjob-random-h9l2h54d   Created   True     25s
+tfjob-random-pf5htw5f   Created   True     25s</p>
+</details>
+<p>Each TFJob creates a <code>Worker</code> pod to run the trial.</p>
 <pre><code class="language-console">kubectl -n kubeflow get po -l controller-name=tf-operator
 </code></pre>
 <details>
@@ -1195,9 +1207,289 @@ data:
 kind: ConfigMap
 </code></pre>
 </details>
+<p>We can see the metrics-collector container injected into the TFJob worker pod.</p>
+<pre><code class="language-console">kubectl -n kubeflow describe  po -l controller-name=tf-operator
+</code></pre>
+<details>
+<summary>
+Sample Output
+</summary>
+<pre><code class="language-yaml">Name:               tfjob-random-g4p7jx5b-worker-0
+Namespace:          kubeflow
+Priority:           0
+PriorityClassName:  &lt;none&gt;
+Node:               katib/10.0.2.15
+Start Time:         Tue, 29 Oct 2019 18:37:20 +0000
+Labels:             controller-name=tf-operator
+                    group-name=kubeflow.org
+                    job-name=tfjob-random-g4p7jx5b
+                    job-role=master
+                    tf-job-name=tfjob-random-g4p7jx5b
+                    tf-replica-index=0
+                    tf-replica-type=worker
+Annotations:        &lt;none&gt;
+Status:             Pending
+IP:
+Controlled By:      TFJob/tfjob-random-g4p7jx5b
+Containers:
+  tensorflow:
+    Container ID:
+    Image:         gcr.io/kubeflow-ci/tf-mnist-with-summaries:1.0
+    Image ID:
+    Port:          2222/TCP
+    Host Port:     0/TCP
+    Command:
+      python
+      /var/tf_mnist/mnist_with_summaries.py
+      --log_dir=/train/metrics
+      --learning_rate=0.044867652686667765
+      --batch_size=179
+    State:          Waiting
+      Reason:       ContainerCreating
+    Ready:          False
+    Restart Count:  0
+    Environment:    &lt;none&gt;
+    Mounts:
+      /train from metrics-volume (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-mskhc (ro)
+  metrics-collector:
+    Container ID:
+    Image:         gcr.io/kubeflow-images-public/katib/v1alpha3/tfevent-metrics-collector:v0.7.0
+    Image ID:
+    Port:          &lt;none&gt;
+    Host Port:     &lt;none&gt;
+    Args:
+      -t
+      tfjob-random-g4p7jx5b
+      -m
+      accuracy_1
+      -s
+      katib-manager.kubeflow:6789
+      -path
+      /train
+    State:          Waiting
+      Reason:       ContainerCreating
+    Ready:          False
+    Restart Count:  0
+    Environment:    &lt;none&gt;
+    Mounts:
+      /train from metrics-volume (rw)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             False
+  ContainersReady   False
+  PodScheduled      True
+Volumes:
+  default-token-mskhc:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-mskhc
+    Optional:    false
+  metrics-volume:
+    Type:        EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:
+    SizeLimit:   &lt;unset&gt;
+QoS Class:       BestEffort
+Node-Selectors:  &lt;none&gt;
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  4s    default-scheduler  Successfully assigned kubeflow/tfjob-random-g4p7jx5b-worker-0 to katib
+  Normal  Pulled     2s    kubelet, katib     Container image &quot;gcr.io/kubeflow-ci/tf-mnist-with-summaries:1.0&quot; already present on machine
+  Normal  Created    2s    kubelet, katib     Created container tensorflow
+  Normal  Started    1s    kubelet, katib     Started container tensorflow
+  Normal  Pulled     1s    kubelet, katib     Container image &quot;gcr.io/kubeflow-images-public/katib/v1alpha3/tfevent-metrics-collector:v0.7.0&quot; already present on machine
+  Normal  Created    1s    kubelet, katib     Created container metrics-collector
+  Normal  Started    1s    kubelet, katib     Started container metrics-collector
+
+
+Name:               tfjob-random-jcdvtfdf-worker-0
+Namespace:          kubeflow
+Priority:           0
+PriorityClassName:  &lt;none&gt;
+Node:               katib/10.0.2.15
+Start Time:         Tue, 29 Oct 2019 18:35:44 +0000
+Labels:             controller-name=tf-operator
+                    group-name=kubeflow.org
+                    job-name=tfjob-random-jcdvtfdf
+                    job-role=master
+                    tf-job-name=tfjob-random-jcdvtfdf
+                    tf-replica-index=0
+                    tf-replica-type=worker
+Annotations:        &lt;none&gt;
+Status:             Running
+IP:                 192.168.0.231
+Controlled By:      TFJob/tfjob-random-jcdvtfdf
+Containers:
+  tensorflow:
+    Container ID:  docker://2792566751a57a6ab804621a9ec8b56e29ced44ddaceb6e395cd4fb8d7b0f7d6
+    Image:         gcr.io/kubeflow-ci/tf-mnist-with-summaries:1.0
+    Image ID:      docker-pullable://gcr.io/kubeflow-ci/tf-mnist-with-summaries@sha256:5c3181c3a97bc6f88fab204d4ac19ea12413b192953e21dc0ed07e7b821ddbe2
+    Port:          2222/TCP
+    Host Port:     0/TCP
+    Command:
+      python
+      /var/tf_mnist/mnist_with_summaries.py
+      --log_dir=/train/metrics
+      --learning_rate=0.025430765523205827
+      --batch_size=140
+    State:          Running
+      Started:      Tue, 29 Oct 2019 18:35:46 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    &lt;none&gt;
+    Mounts:
+      /train from metrics-volume (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-mskhc (ro)
+  metrics-collector:
+    Container ID:  docker://4109a92753bdfddb2aa9dd4f866fcddb068016e2a65b24a321ac0ac832fac48f
+    Image:         gcr.io/kubeflow-images-public/katib/v1alpha3/tfevent-metrics-collector:v0.7.0
+    Image ID:      docker-pullable://gcr.io/kubeflow-images-public/katib/v1alpha3/tfevent-metrics-collector@sha256:d7c8fa8147f99ebb563c4d59fc6c333f96684f1598cce2f7eae629a878671656
+    Port:          &lt;none&gt;
+    Host Port:     &lt;none&gt;
+    Args:
+      -t
+      tfjob-random-jcdvtfdf
+      -m
+      accuracy_1
+      -s
+      katib-manager.kubeflow:6789
+      -path
+      /train
+    State:          Running
+      Started:      Tue, 29 Oct 2019 18:35:46 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    &lt;none&gt;
+    Mounts:
+      /train from metrics-volume (rw)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  default-token-mskhc:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-mskhc
+    Optional:    false
+  metrics-volume:
+    Type:        EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:
+    SizeLimit:   &lt;unset&gt;
+QoS Class:       BestEffort
+Node-Selectors:  &lt;none&gt;
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  99s   default-scheduler  Successfully assigned kubeflow/tfjob-random-jcdvtfdf-worker-0 to katib
+  Normal  Pulled     97s   kubelet, katib     Container image &quot;gcr.io/kubeflow-ci/tf-mnist-with-summaries:1.0&quot; already present on machine
+  Normal  Created    97s   kubelet, katib     Created container tensorflow
+  Normal  Started    97s   kubelet, katib     Started container tensorflow
+  Normal  Pulled     97s   kubelet, katib     Container image &quot;gcr.io/kubeflow-images-public/katib/v1alpha3/tfevent-metrics-collector:v0.7.0&quot; already present on machine
+  Normal  Created    97s   kubelet, katib     Created container metrics-collector
+  Normal  Started    97s   kubelet, katib     Started container metrics-collector
+
+
+Name:               tfjob-random-r66tzmjr-worker-0
+Namespace:          kubeflow
+Priority:           0
+PriorityClassName:  &lt;none&gt;
+Node:               katib/10.0.2.15
+Start Time:         Tue, 29 Oct 2019 18:35:43 +0000
+Labels:             controller-name=tf-operator
+                    group-name=kubeflow.org
+                    job-name=tfjob-random-r66tzmjr
+                    job-role=master
+                    tf-job-name=tfjob-random-r66tzmjr
+                    tf-replica-index=0
+                    tf-replica-type=worker
+Annotations:        &lt;none&gt;
+Status:             Running
+IP:                 192.168.0.230
+Controlled By:      TFJob/tfjob-random-r66tzmjr
+Containers:
+  tensorflow:
+    Container ID:  docker://b3836fc16b83e82b3c3cad90472eeb079762f320270c834038d4a58f845f45b1
+    Image:         gcr.io/kubeflow-ci/tf-mnist-with-summaries:1.0
+    Image ID:      docker-pullable://gcr.io/kubeflow-ci/tf-mnist-with-summaries@sha256:5c3181c3a97bc6f88fab204d4ac19ea12413b192953e21dc0ed07e7b821ddbe2
+    Port:          2222/TCP
+    Host Port:     0/TCP
+    Command:
+      python
+      /var/tf_mnist/mnist_with_summaries.py
+      --log_dir=/train/metrics
+      --learning_rate=0.04503686583590331
+      --batch_size=120
+    State:          Running
+      Started:      Tue, 29 Oct 2019 18:35:45 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    &lt;none&gt;
+    Mounts:
+      /train from metrics-volume (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-mskhc (ro)
+  metrics-collector:
+    Container ID:  docker://a94b366df6c6e3e318be7b9a72e92c26e988167338aacae68498ef68662eb619
+    Image:         gcr.io/kubeflow-images-public/katib/v1alpha3/tfevent-metrics-collector:v0.7.0
+    Image ID:      docker-pullable://gcr.io/kubeflow-images-public/katib/v1alpha3/tfevent-metrics-collector@sha256:d7c8fa8147f99ebb563c4d59fc6c333f96684f1598cce2f7eae629a878671656
+    Port:          &lt;none&gt;
+    Host Port:     &lt;none&gt;
+    Args:
+      -t
+      tfjob-random-r66tzmjr
+      -m
+      accuracy_1
+      -s
+      katib-manager.kubeflow:6789
+      -path
+      /train
+    State:          Running
+      Started:      Tue, 29 Oct 2019 18:35:45 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    &lt;none&gt;
+    Mounts:
+      /train from metrics-volume (rw)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  default-token-mskhc:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-mskhc
+    Optional:    false
+  metrics-volume:
+    Type:        EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:
+    SizeLimit:   &lt;unset&gt;
+QoS Class:       BestEffort
+Node-Selectors:  &lt;none&gt;
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  100s  default-scheduler  Successfully assigned kubeflow/tfjob-random-r66tzmjr-worker-0 to katib
+  Normal  Pulled     99s   kubelet, katib     Container image &quot;gcr.io/kubeflow-ci/tf-mnist-with-summaries:1.0&quot; already present on machine
+  Normal  Created    99s   kubelet, katib     Created container tensorflow
+  Normal  Started    98s   kubelet, katib     Started container tensorflow
+  Normal  Pulled     98s   kubelet, katib     Container image &quot;gcr.io/kubeflow-images-public/katib/v1alpha3/tfevent-metrics-collector:v0.7.0&quot; already present on machine
+  Normal  Created    98s   kubelet, katib     Created container metrics-collector
+  Normal  Started    98s   kubelet, katib     Started container metrics-collector
+</code></pre>
+</details>
 <h3><a class="header" href="#experiment-completion" id="experiment-completion">Experiment Completion</a></h3>
 <p>Once the Trials created by Katib are complete, the Experiment enters a completed state.
-Check the completion status of the <code>Experiment</code> <strong>tfjob-example</strong></p>
+Check the completion status of the <code>Experiment</code> <strong>tfjob-random</strong></p>
 <pre><code class="language-console">kubectl -n kubeflow get experiment tfjob-random -o json
 </code></pre>
 <details>
