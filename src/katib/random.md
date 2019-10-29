@@ -122,6 +122,8 @@ kubectl -n kubeflow get experiment tfjob-random -o json
 <summary>
  Sample Output
  </summary>
+
+```json
 {
     "apiVersion": "kubeflow.org/v1alpha3",
     "kind": "Experiment",
@@ -209,6 +211,7 @@ kubectl -n kubeflow get experiment tfjob-random -o json
         "startTime": "2019-10-27T02:46:02Z"
     }
 }
+```
 
 </details>
 
@@ -226,6 +229,8 @@ kubectl -n kubeflow  get suggestions tfjob-random -o yaml
 <summary>
  Sample Output - before suggestions are ready
  </summary>
+
+```yaml
 apiVersion: kubeflow.org/v1alpha3
 kind: Suggestion
 metadata:
@@ -261,6 +266,8 @@ status:
     status: "False"
     type: DeploymentReady
   startTime: "2019-10-27T02:57:58Z"
+```
+
 </details>
 
 We now have a `Suggestion` resource created. The Katib Suggestion Service takes control and generates a deployment to run the specified Suggestion.
@@ -272,7 +279,9 @@ The suggestion service provides suggestions based on the current state of the sy
 <summary>
  Sample Output - after suggestions are ready
  </summary>
- apiVersion: v1
+
+```yaml
+apiVersion: v1
 items:
 - apiVersion: kubeflow.org/v1alpha3
   kind: Suggestion
@@ -389,6 +398,7 @@ items:
         value: "0.029127223437729596"
       - name: --batch_size
         value: "133"
+```
 </details>
 
 ### Trials
@@ -421,10 +431,14 @@ kubectl -n kubeflow get po -l controller-name=tf-operator
 <summary>
  Sample Output
  </summary>
+
+```
 NAME                             READY   STATUS    RESTARTS   AGE
 tfjob-random-484zhpzq-worker-0   2/2     Running   0          39s
 tfjob-random-wqglhpqj-worker-0   2/2     Running   0          40s
 tfjob-random-zb89h929-worker-0   2/2     Running   0          41s
+```
+
 </details>
 
 ### Metric Collection
@@ -448,8 +462,12 @@ kubectl get MutatingWebhookConfiguration
 <summary>
  Sample Output
  </summary>
+
+```
 NAME                            CREATED AT
 katib-mutating-webhook-config   2019-10-26T21:00:30Z
+```
+
 </details>
 
 ```console
@@ -459,8 +477,12 @@ kubectl get ValidatingWebhookConfiguration
 <summary>
  Sample Output
  </summary>
+
+```
 NAME                              CREATED AT
 katib-validating-webhook-config   2019-10-26T21:00:30Z
+```
+
 </details>
 
 The mutating webhook looks at Katib configuration and injects a side car container to the `Trial` jobs/pods. You can see the configurations as follows.
@@ -472,6 +494,8 @@ kubectl -n kubeflow get cm katib-config -o yaml
 <summary>
  Sample Output
  </summary>
+
+```yaml
  apiVersion: v1
 data:
   metrics-collector-sidecar: |-
@@ -508,6 +532,8 @@ data:
       }
     }
 kind: ConfigMap
+```
+
  </details>
 
 ### Experiment Completion
@@ -538,6 +564,8 @@ kubectl -n kubeflow get pods
 <summary>
  Sample Output
  </summary>
+
+```
  NAME                                    READY   STATUS    RESTARTS   AGE
 katib-controller-7665868558-nfghw       1/1     Running   1          21m
 katib-db-594756f779-dxttq               1/1     Running   0          21m
@@ -546,4 +574,6 @@ katib-ui-854969c97-tl4wg                1/1     Running   0          21m
 pytorch-operator-794899d49b-ww59g       1/1     Running   0          21m
 tf-job-operator-7b589f5f5f-fpr2p        1/1     Running   0          21m
 tfjob-example-random-6d68b59ccd-fcn8f   1/1     Running   0          15m
+```
+
 </details>

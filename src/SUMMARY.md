@@ -16,6 +16,7 @@
     - [(Optional) AutoML Intuition](katib/automl.md)
 - [Kubeflow](kubeflow/kubeflow.md)
     - [Installation](kubeflow/install.md)
+    - [Pipelines](kubeflow/pipelines.md)
 - [Cleanup](cleanup/cleanup.md)
 - [References](references/README.md)
    

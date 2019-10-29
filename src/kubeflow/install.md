@@ -4,7 +4,7 @@
 
 <details>
 <summary>
-Do the following on Max OS X
+Instructions for Mac OS X
 </summary>
 
 ```console
@@ -16,7 +16,7 @@ mv kfctl-darwin /usr/local/bin/kfctl
 
 <details>
 <summary>
-Do the following on Linux
+Instructions for Linux
 </summary>
 
 ```console
