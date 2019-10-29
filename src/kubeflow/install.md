@@ -12,7 +12,7 @@ curl -L -O https://github.com/kubeflow/kubeflow/releases/download/v0.7.0-rc.6/kf
 tar xf kfctl_v0.7.0-rc.5-7-gc66ebff3_darwin.tar.gz
 mv kfctl-darwin /usr/local/bin/kfctl
 ```
-<details>
+</details>
 
 <details>
 <summary>
@@ -22,10 +22,10 @@ Do the following on Linux
 ```console
 curl -L -O https://github.com/kubeflow/kubeflow/releases/download/v0.7.0-rc.6/kfctl_v0.7.0-rc.5-7-gc66ebff3_linux.tar.gz
 tar xf kfctl_v0.7.0-rc.5-7-gc66ebff3_linux.tar.gz
-mv kfctl /usr/local/bin/kfctl
+sudo mv kfctl /usr/local/bin/kfctl
  ```
 
-<details>
+</details>
 
 ### Create Kubeflow Configuration
 
