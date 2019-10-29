@@ -285,8 +285,13 @@ This may take 15-20 minutes and at the end of it you will have a single node Kub
 <p>If you see an SSL error during vagrant up, please add the following to <code>Vagrantfile</code> after line 11.</p>
 <pre><code>config.vm.box_download_insecure = true
 </code></pre>
+<p>If you have an existing image that you were trying to download, you need to delete it.
+Go to the tutorial folder and do the following:</p>
+<pre><code>vagrant destroy
+</code></pre>
 <p>Add Virtual Box image using the USB box file.</p>
-<pre><code>vagrant box add --provider=virtualbox minikatib/tfworld package.box
+<pre><code>
+vagrant box add --provider=virtualbox minikatib/tfworld package.box
 </code></pre>
 <h1><a class="header" href="#install-kubernetes" id="install-kubernetes">Install Kubernetes</a></h1>
 <p>Login to the VM</p>
