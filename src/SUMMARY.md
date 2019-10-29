@@ -13,11 +13,9 @@
         - [Random Search](katib/random.md)
         - [Grid Search](katib/grid.md)
         - [Bayesian Optimization](katib/bayesian.md)
-    - [Neural Architecture Search](katib/nas.md)
     - [(Optional) AutoML Intuition](katib/automl.md)
 - [Kubeflow](kubeflow/kubeflow.md)
-    - [Architecture](kubeflow/architecture.md)
-    - [Jupyter Notebook](kubeflow/jupyter.md)
+    - [Installation](kubeflow/instll.md)
 - [Cleanup](cleanup/cleanup.md)
 - [References](references/README.md)
    

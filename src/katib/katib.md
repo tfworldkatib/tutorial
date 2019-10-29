@@ -22,6 +22,6 @@ In this tutorial we will focus on Hyperparameter tuning.
 
 ## Neural Architecture Search
 
-Neural Architecture Search finds the optimal neural architecture for a given dataset.
+Neural Architecture Search finds the optimal neural architecture for a given data set.
 
 ![Neural Architecture Search](../images/katib.png)
