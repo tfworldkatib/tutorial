@@ -156,6 +156,8 @@ spec:
 </details>
 
 ```console
+cd $HOME
+git clone https://github.com/tfworldkatib/tutorial.git
 cd $HOME/tutorial/examples
 kubectl apply -f mnistpod.yaml
  ```
