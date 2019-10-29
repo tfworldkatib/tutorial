@@ -15,7 +15,7 @@
         - [Bayesian Optimization](katib/bayesian.md)
     - [(Optional) AutoML Intuition](katib/automl.md)
 - [Kubeflow](kubeflow/kubeflow.md)
-    - [Installation](kubeflow/instll.md)
+    - [Installation](kubeflow/install.md)
 - [Cleanup](cleanup/cleanup.md)
 - [References](references/README.md)
    
