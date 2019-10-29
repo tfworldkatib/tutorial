@@ -520,6 +520,88 @@ csinodes                                       storage.k8s.io                 fa
 storageclasses                    sc           storage.k8s.io                 false        StorageClass
 volumeattachments                              storage.k8s.io                 false        VolumeAttachment
 </details>
+<h3><a class="header" href="#pod" id="pod">Pod</a></h3>
+<p>Specification for a Kubernetes resource  can be done via yaml file. Kubernetes manages pods instead of containers. A pod can contain one or more containers. Containers in a pod share resources and common local network. As we will see during Katib section of the tutorial, Katib injects a metrics container to the model training pod. Here is a yaml file to run mnist example as a pod.  The max_steps is set to 1 to speed-up running the mnist example.</p>
+<details>
+<summary>
+Mnist pod example
+</summary>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Pod
+metadata:
+  name: mnistpod
+spec:
+  containers:
+  - name: mnist
+    image: gcr.io/kubeflow-ci/tf-mnist-with-summaries:1.0
+    command:
+    - &quot;python&quot;
+    - &quot;/var/tf_mnist/mnist_with_summaries.py&quot;
+    - &quot;--max_steps=1&quot;        
+    - &quot;--batch_size=2&quot;        
+  restartPolicy: Never
+</code></pre>
+</details>
+<pre><code class="language-console">cd $HOME/tutorial/examples
+kubectl apply -f mnistpod.yaml
+</code></pre>
+<details>
+<summary>
+ Sample Output
+ </summary>
+pod/mnistpod created
+</details>
+<p>Check that the <code>Pod</code> <strong>mnistpod</strong> has started.</p>
+<pre><code class="language-console">kubectl get pods
+</code></pre>
+<details>
+<summary>
+ Sample Output
+ </summary>
+NAME            STATUS    AGE
+mnistpod       Running    2s
+</details> 
+<p>Check the logs of the <code>Pod</code> <strong>mnistpod</strong></p>
+<pre><code class="language-console">kubectl logs -f mnistpod 
+</code></pre>
+<details>
+<summary>
+ Sample Output
+ </summary>
+WARNING:tensorflow:From /var/tf_mnist/mnist_with_summaries.py:39: read_data_sets (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use alternatives such as official/mnist/dataset.py from tensorflow/models.
+WARNING:tensorflow:From /usr/local/lib/python2.7/dist-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:260: maybe_download (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please write your own downloading logic.
+WARNING:tensorflow:From /usr/local/lib/python2.7/dist-packages/tensorflow/contrib/learn/python/learn/datasets/base.py:252: wrapped_fn (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use urllib or similar directly.
+WARNING:tensorflow:From /usr/local/lib/python2.7/dist-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:262: extract_images (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use tf.data to implement this functionality.
+WARNING:tensorflow:From /usr/local/lib/python2.7/dist-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:267: extract_labels (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use tf.data to implement this functionality.
+WARNING:tensorflow:From /usr/local/lib/python2.7/dist-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:290: __init__ (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use alternatives such as official/mnist/dataset.py from tensorflow/models.
+2019-10-29 01:42:17.348035: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2
+Successfully downloaded train-images-idx3-ubyte.gz 9912422 bytes.
+Extracting /tmp/tensorflow/mnist/input_data/train-images-idx3-ubyte.gz
+Successfully downloaded train-labels-idx1-ubyte.gz 28881 bytes.
+Extracting /tmp/tensorflow/mnist/input_data/train-labels-idx1-ubyte.gz
+Successfully downloaded t10k-images-idx3-ubyte.gz 1648877 bytes.
+Extracting /tmp/tensorflow/mnist/input_data/t10k-images-idx3-ubyte.gz
+Successfully downloaded t10k-labels-idx1-ubyte.gz 4542 bytes.
+Extracting /tmp/tensorflow/mnist/input_data/t10k-labels-idx1-ubyte.gz
+Accuracy at step 0: 0.1005
+</details>
+<p>Notice the Accuracy output from the <strong>mnistpod</strong>.  This will be used by Katib to find accuracy results from a given hyperparameter set.</p>
+<p>Delete the <code>Pod</code> <strong>mnistpod</strong></p>
+<pre><code class="language-console">kubectl delete -f mnistpod.yaml
+</code></pre>
+<h3><a class="header" href="#crd-custom-resource-definition" id="crd-custom-resource-definition">CRD (Custom Resource Definition)</a></h3>
 <p>Kubernetes supports <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/extend-cluster/">various</a> types of extension capabilities at all layers, starting with the API server, scheduler, controllers all the way to the kubelet. One of the common patterns used to add new resources and capabilities to the Kubernetes API server is called the Operator Pattern. This consists of creating a custom resource(<code>Kind</code>) and a controller that manages this custom resource.
 Kubeflow and Katib use this extensively. This allows Kubeflow and Katib to be integrated with Kubernetes. You can manage and interact with Kubeflow and Katib components just as you interact with any other Kubernetes component!</p>
 <p><img src="kubernetes/../images/operator.png" alt="Kubernetes Extensibility" /></p>
@@ -536,7 +618,8 @@ pytorchjobs.kubeflow.org   2019-10-26T21:00:27Z
 suggestions.kubeflow.org   2019-10-26T21:00:25Z
 tfjobs.kubeflow.org        2019-10-26T21:00:27Z
 trials.kubeflow.org        2019-10-26T21:00:25Z
-</details><h1><a class="header" href="#katib" id="katib">Katib</a></h1>
+</details>
+<h1><a class="header" href="#katib" id="katib">Katib</a></h1>
 <p>Katib is a scalable and extensible <code>Automatic Machine Learning</code>(AutoML) framework on Kubernetes. It supports Hyperparameter tuning and neural architecture search. It enables users to discover models that are as good as hand-crafted models, without having to go through the laborious process of manual configuration and iteration.</p>
 <p>Katib organizes an optimization or neural architecture search as an <code>Experiment</code>. 
 AutoML algorithms run in an interactive manner. An <code>Experiment</code> defines the search space, metrics target and maximum number of iterations. Katib searches iteratively in the search space to meet the metrics target or for the maximum number of iterations.
@@ -1656,6 +1739,9 @@ With the rise of neural networks and big data, improving bias and variance toget
 <pre><code class="language-console">vboxmanage unregistervm &lt;vmid from the previous step&gt; --delete
 </code></pre>
 <h1><a class="header" href="#references" id="references">References</a></h1>
+<p>https://github.com/kubeflow/katib
+https://github.com/kubeflow/kubeflow
+https://www.automl.org/book/</p>
 
                     </main>
 
