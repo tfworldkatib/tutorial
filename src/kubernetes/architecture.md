@@ -129,6 +129,107 @@ storageclasses                    sc           storage.k8s.io                 fa
 volumeattachments                              storage.k8s.io                 false        VolumeAttachment
 </details>
 
+### Pod
+Specification for a Kubernetes resource  can be done via yaml file. Kubernetes manages pods instead of containers. A pod can contain one or more containers. Containers in a pod share resources and common local network. As we will see during Katib section of the tutorial, Katib injects a metrics container to the model training pod. Here is a yaml file to run mnist example as a pod.  The max_steps is set to 1 to speed-up running the mnist example.
+
+<details>
+<summary>
+Mnist pod example
+</summary>
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mnistpod
+spec:
+  containers:
+  - name: mnist
+    image: gcr.io/kubeflow-ci/tf-mnist-with-summaries:1.0
+    command:
+    - "python"
+    - "/var/tf_mnist/mnist_with_summaries.py"
+    - "--max_steps=1"        
+    - "--batch_size=2"        
+  restartPolicy: Never
+```
+</details>
+
+```console
+cd $HOME/tutorial/examples
+kubectl apply -f mnistpod.yaml
+ ```
+<details>
+<summary>
+ Sample Output
+ </summary>
+pod/mnistpod created
+</details>
+
+Check that the `Pod` **mnistpod** has started.
+
+ ```console
+kubectl get pods
+ ```
+
+<details>
+<summary>
+ Sample Output
+ </summary>
+NAME            STATUS    AGE
+mnistpod       Running    2s
+</details> 
+
+Check the logs of the `Pod` **mnistpod**
+
+ ```console
+kubectl logs -f mnistpod 
+ ```
+<details>
+<summary>
+ Sample Output
+ </summary>
+WARNING:tensorflow:From /var/tf_mnist/mnist_with_summaries.py:39: read_data_sets (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use alternatives such as official/mnist/dataset.py from tensorflow/models.
+WARNING:tensorflow:From /usr/local/lib/python2.7/dist-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:260: maybe_download (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please write your own downloading logic.
+WARNING:tensorflow:From /usr/local/lib/python2.7/dist-packages/tensorflow/contrib/learn/python/learn/datasets/base.py:252: wrapped_fn (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use urllib or similar directly.
+WARNING:tensorflow:From /usr/local/lib/python2.7/dist-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:262: extract_images (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use tf.data to implement this functionality.
+WARNING:tensorflow:From /usr/local/lib/python2.7/dist-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:267: extract_labels (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use tf.data to implement this functionality.
+WARNING:tensorflow:From /usr/local/lib/python2.7/dist-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:290: __init__ (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use alternatives such as official/mnist/dataset.py from tensorflow/models.
+2019-10-29 01:42:17.348035: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2
+Successfully downloaded train-images-idx3-ubyte.gz 9912422 bytes.
+Extracting /tmp/tensorflow/mnist/input_data/train-images-idx3-ubyte.gz
+Successfully downloaded train-labels-idx1-ubyte.gz 28881 bytes.
+Extracting /tmp/tensorflow/mnist/input_data/train-labels-idx1-ubyte.gz
+Successfully downloaded t10k-images-idx3-ubyte.gz 1648877 bytes.
+Extracting /tmp/tensorflow/mnist/input_data/t10k-images-idx3-ubyte.gz
+Successfully downloaded t10k-labels-idx1-ubyte.gz 4542 bytes.
+Extracting /tmp/tensorflow/mnist/input_data/t10k-labels-idx1-ubyte.gz
+Accuracy at step 0: 0.1005
+
+</details>
+
+Notice the Accuracy output from the **mnistpod**.  This will be used by Katib to find accuracy results from a given hyperparameter set.
+
+Delete the `Pod` **mnistpod**
+
+ ```console
+kubectl delete -f mnistpod.yaml
+ ```
+ 
+
+### CRD (Custom Resource Definition)
 Kubernetes supports [various](https://kubernetes.io/docs/concepts/extend-kubernetes/extend-cluster/) types of extension capabilities at all layers, starting with the API server, scheduler, controllers all the way to the kubelet. One of the common patterns used to add new resources and capabilities to the Kubernetes API server is called the Operator Pattern. This consists of creating a custom resource(`Kind`) and a controller that manages this custom resource.
 Kubeflow and Katib use this extensively. This allows Kubeflow and Katib to be integrated with Kubernetes. You can manage and interact with Kubeflow and Katib components just as you interact with any other Kubernetes component!
 
