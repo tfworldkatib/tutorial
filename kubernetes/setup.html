@@ -149,6 +149,10 @@
 <h3><a class="header" href="#goals" id="goals">Goals</a></h3>
 <p>In this section we will configure the single node Kubernetes cluster to support persistent storage.</p>
 <p><code>You can skip this section if you have an existing Kubernetes cluster with a dynamic volume provisioner.</code></p>
+<p>Troubleshooting:</p>
+<p>If you see an SSL error during vagrant up, please add the following to <code>Vagrantfile</code> after line 11.</p>
+<pre><code>config.vm.box_download_insecure = true
+</code></pre>
 
                     </main>
 
